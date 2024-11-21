@@ -1,9 +1,13 @@
-export class IfDash extends HTMLElement {
+import { HtmlangElement } from './htmlangElement';
+
+export class IfDash extends HtmlangElement {
   static observedAttributes = ['('];
 
   _innerHtml: string | null = null;
 
   connectedCallback() {
+    super.connectedCallback();
+
     this._innerHtml = this.innerHTML;
 
     const condition = this.getAttribute('(');

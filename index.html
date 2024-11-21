@@ -9,14 +9,26 @@
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
     <if- (="2 + 2 === 4" )>
-      <console- log(="Hello World" )></console->
+      <console- log(="Hello World" ) />
     </if->
 
     <ul>
       <for- (="item of [1, 2, '😅', 4, 5]" )>
         <li>Item {item}</li>
-        <console- log(="Logging {item}" )></console->
+        <console- log(="Logging {item}" ) />
       </for->
     </ul>
+
+    <const- name="Andy"></const->
+    <console- log(="Hi, my name is {name}" )></console->
+    <scope->
+      <const- name="Joe"></const->
+      <const- age="42"></const->
+      <console- log(="Hi, my name is now {name}" )></console->
+      <console- log(="I am {age} years old" ) />
+      <scope->
+        <console- log(="I am still {age} years old" ) />
+      </scope->
+    </scope->
   </body>
 </html>

@@ -1,9 +1,13 @@
-export class ForDash extends HTMLElement {
+import { HtmlangElement } from './htmlangElement';
+
+export class ForDash extends HtmlangElement {
   static observedAttributes = ['('];
 
   _innerHtml: string | null = null;
 
   connectedCallback() {
+    super.connectedCallback();
+
     this._innerHtml = this.innerHTML;
     this._loop(this.getAttribute('(') ?? '');
   }
