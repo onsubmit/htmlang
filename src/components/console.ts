@@ -1,3 +1,4 @@
+import { Variable } from '../variable';
 import { HtmlangElement } from './htmlangElement';
 
 export class ConsoleDash extends HtmlangElement {
@@ -9,19 +10,11 @@ export class ConsoleDash extends HtmlangElement {
       return;
     }
 
-    const matches = log.matchAll(/{(?<VAR_NAME>\S+)}/g);
-    if (!matches) {
-      return;
-    }
-
-    for (const match of matches) {
-      const varName = match.groups?.['VAR_NAME'];
-      if (!varName) {
-        continue;
-      }
-
-      log = log.replaceAll(`{${varName}}`, this.parentScope?.getVariable(varName));
-    }
+    Variable.forEach(log, (varName) => {
+      const result = this.parentScope.getVariable(varName);
+      const value = result.found ? result.variable.value : undefined;
+      log = log!.replaceAll(`{${varName}}`, value);
+    });
 
     console.log(log);
   }

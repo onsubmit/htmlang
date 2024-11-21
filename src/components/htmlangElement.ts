@@ -17,7 +17,11 @@ export abstract class HtmlangElement extends HTMLElement {
     return this._scopeId;
   }
 
-  get parentScope(): Scope | null {
+  get parentScope(): Scope {
+    if (!this._parentScope) {
+      throw new Error('No parent scope found');
+    }
+
     return this._parentScope;
   }
 

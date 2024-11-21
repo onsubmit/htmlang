@@ -1,3 +1,4 @@
+import { Variable } from '../variable';
 import { HtmlangElement } from './htmlangElement';
 
 export class ConstDash extends HtmlangElement {
@@ -8,6 +9,7 @@ export class ConstDash extends HtmlangElement {
     if (!attr) return;
 
     const parentScope = this._getParentScope();
-    parentScope.addVariable(attr.name, attr.value);
+    const variable = new Variable(attr.name, attr.value, parentScope);
+    parentScope.addVariable(variable);
   }
 }

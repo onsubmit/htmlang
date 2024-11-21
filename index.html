@@ -8,21 +8,25 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-    <if- (="2 + 2 === 4" )>
-      <console- log(="Hello World" ) />
+
+    <const- i="2"></const->
+    <const- bananas="'bananas'"></const->
+    <if- (="2 + {i} === 4" )>
+      <console- log(="My favorite fruit is: {bananas}" ) />
     </if->
 
+    <const- fruits="['apples', 'oranges', {bananas}]"></const->
     <ul>
-      <for- (="item of [1, 2, '😅', 4, 5]" )>
-        <li>Item {item}</li>
-        <console- log(="Logging {item}" ) />
+      <for- (="fruit of {fruits}" )>
+        <li>Fruit: {fruit}</li>
+        <console- log(="Logging fruit: {fruit}" ) />
       </for->
     </ul>
 
-    <const- name="Andy"></const->
+    <const- name="'Andy'"></const->
     <console- log(="Hi, my name is {name}" )></console->
     <scope->
-      <const- name="Joe"></const->
+      <const- name="'Joe'"></const->
       <const- age="42"></const->
       <console- log(="Hi, my name is now {name}" )></console->
       <console- log(="I am {age} years old" ) />

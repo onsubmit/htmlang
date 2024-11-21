@@ -1,6 +1,8 @@
+import { Variable } from './variable';
+
 export class Scope {
   private _id: string;
-  private _variables: Map<string, any>;
+  private _variables: Map<string, Variable>;
   private _parent: Scope | null;
   private _children: Map<string, Scope>;
 
@@ -15,23 +17,26 @@ export class Scope {
     return this._id;
   }
 
-  addVariable = (name: string, value: any) => {
-    if (this._variables.has(name)) {
+  addVariable = (variable: Variable) => {
+    if (this._variables.has(variable.name)) {
       throw new Error(`Variable ${name} is already defined in this scope.`);
     }
 
-    this._variables.set(name, value);
+    this._variables.set(variable.name, variable);
   };
 
-  getVariable = (name: string): any => {
+  getVariable = (name: string): { found: boolean; variable: Variable } | { found: false } => {
     let current: Scope | null = this;
     while (current != null) {
-      if (current._variables.has(name)) {
-        return current._variables.get(name);
+      const variable = current._variables.get(name);
+      if (variable) {
+        return { found: true, variable };
       }
 
       current = this._parent;
     }
+
+    return { found: false };
   };
 
   addChildScope = (child: Scope) => {

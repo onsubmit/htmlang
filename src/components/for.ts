@@ -1,3 +1,4 @@
+import { Variable } from '../variable';
 import { HtmlangElement } from './htmlangElement';
 
 export class ForDash extends HtmlangElement {
@@ -24,11 +25,38 @@ export class ForDash extends HtmlangElement {
     }
   }
 
-  _loop(value: string) {
+  private _loop(attribute: string) {
     this.innerHTML = '';
-    const [varName, arr] = value.split(' of ');
-    for (const item of eval(arr)) {
+    const { varName, array } = this.getLoopParams(attribute);
+
+    for (const item of array) {
       this.innerHTML += this._innerHtml!.replaceAll(`{${varName}}`, item);
     }
+  }
+
+  private getLoopParams(attribute: string): { varName: string; array: Array<any> } {
+    const [varName, arrStr] = attribute.split(' of ');
+
+    if (!varName) {
+      throw new Array(`Could not parse the variable name from the attribute: ${attribute}`);
+    }
+
+    const arrVarName = Variable.getName(arrStr);
+
+    let array: Array<any> | null = null;
+    if (arrVarName) {
+      const result = this.parentScope.getVariable(arrVarName);
+      if (result.found) {
+        array = result.variable.value;
+      }
+    }
+
+    array = array ?? eval(arrStr);
+
+    if (!Array.isArray(array)) {
+      throw new Array(`Could not parse iterable from the attribute: ${attribute}. Found: ${array}`);
+    }
+
+    return { varName, array };
   }
 }

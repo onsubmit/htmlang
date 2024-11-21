@@ -1,3 +1,4 @@
+import { Variable } from '../variable';
 import { HtmlangElement } from './htmlangElement';
 
 export class IfDash extends HtmlangElement {
@@ -10,8 +11,20 @@ export class IfDash extends HtmlangElement {
 
     this._innerHtml = this.innerHTML;
 
-    const condition = this.getAttribute('(');
-    this._setCondition(!!eval(condition ?? ''));
+    let condition = this.getAttribute('(');
+    if (!condition) {
+      throw new Error('No condition found');
+    }
+
+    Variable.forEach(condition, (varName) => {
+      const result = this.parentScope.getVariable(varName);
+      const value = result.found ? result.variable.value : undefined;
+      condition = condition!.replaceAll(`{${varName}}`, value);
+    });
+
+    const evaluated = !!eval(condition);
+    console.debug(`"${condition}" evaluated to ${evaluated}`);
+    this._setCondition(!evaluated);
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
