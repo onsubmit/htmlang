@@ -12,14 +12,14 @@
     <const- i="2"></const->
     <const- bananas="'bananas'"></const->
     <if- (="2 + {i} === 4" )>
-      <console- log(="My favorite fruit is: {bananas}" )></console>
+      <console- log(="My favorite fruit is: {bananas}" )></console->
     </if->
 
     <const- fruits="['apples', 'oranges', {bananas}]"></const->
     <ul>
       <for- (="fruit of {fruits}" )>
         <li>Fruit: {fruit}</li>
-        <console- log(="Logging fruit: {fruit}" )></console>
+        <console- log(="Logging fruit: {fruit}" )></console->
       </for->
     </ul>
 
@@ -31,7 +31,7 @@
       <console- log(="Hi, my name is now {name}" )></console->
       <console- log(="I am {age} years old" )></console->
       <scope->
-        <console- log(="I am still {age} years old" )
+        <console- log(="I am still {age} years old" )></console->
       </scope->
     </scope->
     <console- log(="Hi, my name is {name} again" )></console->
