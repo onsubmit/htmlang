@@ -8,28 +8,29 @@ export abstract class HtmlangElement extends HTMLElement {
   protected _scopeId = uuidv4();
   private _parentScope: Scope | null = null;
 
-  connectedCallback() {
-    this._parentScope = this._getParentScope();
-    scopeRegistry.createAndAdd(this._scopeId, this._parentScope);
-  }
+  get scope(): Scope {
+    if (!scopeRegistry.has(this._scopeId)) {
+      return this._registerScope().current;
+    }
 
-  get scopeId(): string {
-    return this._scopeId;
+    return scopeRegistry.get(this._scopeId);
   }
 
   get parentScope(): Scope {
     if (!this._parentScope) {
-      throw new Error('No parent scope found');
+      return this._registerScope().parent;
     }
 
     return this._parentScope;
   }
 
+  abstract execute(): void;
+
   protected _getParentScope = (): Scope => {
     let parent = this.parentElement;
     while (parent !== null) {
       if (parent instanceof HtmlangElement) {
-        return scopeRegistry.get(parent.scopeId);
+        return scopeRegistry.get(parent.scope.id);
       } else {
         parent = parent.parentElement;
       }
@@ -37,4 +38,22 @@ export abstract class HtmlangElement extends HTMLElement {
 
     return globalScope;
   };
+
+  private _registerScope = (): { current: Scope; parent: Scope } => {
+    this._parentScope = this._getParentScope();
+    return {
+      current: scopeRegistry.createAndAdd(this._scopeId, this._parentScope),
+      parent: this._parentScope,
+    };
+  };
+}
+
+export class BaseHtmlangElement extends HtmlangElement {
+  static getTagName(): string {
+    throw new Error('Tag name not set');
+  }
+
+  execute(): void {
+    throw new Error('Method not implemented.');
+  }
 }

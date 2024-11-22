@@ -19,7 +19,7 @@ export class Scope {
 
   addVariable = (variable: Variable) => {
     if (this._variables.has(variable.name)) {
-      throw new Error(`Variable ${name} is already defined in this scope.`);
+      throw new Error(`Variable ${variable.name} is already defined in this scope.`);
     }
 
     this._variables.set(variable.name, variable);

@@ -10,10 +10,22 @@
     <script type="module" src="/src/main.ts"></script>
 
     <const- i="2"></const->
+    <let- j="3"></let->
     <const- bananas="'bananas'"></const->
-    <if- (="2 + {i} === 4" )>
+    <if- (="{i} + {j} === 5" )>
       <console- log(="My favorite fruit is: {bananas}" )></console->
     </if->
+
+    <console- log(="j is {j}" )></console->
+    <statement- (="j = 4" )></statement->
+    <console- log(="j is now {j}" )></console->
+    <scope->
+      <let- j="5"></let->
+      <console- log(="j in this scope is {j}" )></console->
+      <statement- (="j = 6" )></statement->
+      <console- log(="j in this scope is now {j}" )></console->
+    </scope->
+    <console- log(="j in previous scope is back to {j}" )></console->
 
     <const- fruits="['apples', 'oranges', {bananas}]"></const->
     <ul>

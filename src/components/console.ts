@@ -1,10 +1,10 @@
 import { Variable } from '../variable';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class ConsoleDash extends HtmlangElement {
-  connectedCallback() {
-    super.connectedCallback();
+export class ConsoleDash extends BaseHtmlangElement {
+  static getTagName = () => 'console';
 
+  execute = () => {
     let log = this.getAttribute('log(');
     if (!log) {
       return;
@@ -17,5 +17,5 @@ export class ConsoleDash extends HtmlangElement {
     });
 
     console.log(log);
-  }
+  };
 }

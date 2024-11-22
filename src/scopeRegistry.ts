@@ -7,6 +7,10 @@ class ScopeRegistry {
     this._scopes = new Map();
   }
 
+  has = (id: string): boolean => {
+    return this._scopes.has(id);
+  };
+
   get = (id: string): Scope => {
     const scope = this._scopes.get(id);
     if (!scope) {

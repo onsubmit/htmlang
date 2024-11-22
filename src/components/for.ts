@@ -1,16 +1,15 @@
 import { Variable } from '../variable';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class ForDash extends HtmlangElement {
+export class ForDash extends BaseHtmlangElement {
+  static getTagName = () => 'for';
+
   static observedAttributes = ['('];
 
   _innerHtml: string | null = null;
 
   connectedCallback() {
-    super.connectedCallback();
-
     this._innerHtml = this.innerHTML;
-    this._loop(this.getAttribute('(') ?? '');
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -24,6 +23,10 @@ export class ForDash extends HtmlangElement {
       }
     }
   }
+
+  execute = () => {
+    this._loop(this.getAttribute('(') ?? '');
+  };
 
   private _loop(attribute: string) {
     this.innerHTML = '';

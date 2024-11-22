@@ -1,11 +1,14 @@
 import { Scope } from './scope';
 
+type VariableType = 'let' | 'const';
 export class Variable {
+  private _type: VariableType;
   private _name: string;
   private _raw: string;
   private _scope: Scope;
 
-  constructor(name: string, raw: string, scope: Scope) {
+  constructor(type: VariableType, name: string, raw: string, scope: Scope) {
+    this._type = type;
     this._name = name;
     this._raw = raw;
     this._scope = scope;
@@ -36,6 +39,14 @@ export class Variable {
   get name(): string {
     return this._name;
   }
+
+  set = (raw: string): void => {
+    if (this._type === 'const') {
+      throw new TypeError('Assignment to constant variable.');
+    }
+
+    this._raw = raw;
+  };
 
   get value(): any {
     let evaluable = this._raw;
