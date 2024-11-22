@@ -39,7 +39,7 @@ export abstract class HtmlangElement extends HTMLElement {
     return globalScope;
   };
 
-  private _registerScope = (): { current: Scope; parent: Scope } => {
+  protected _registerScope = (): { current: Scope; parent: Scope } => {
     this._parentScope = this._getParentScope();
     return {
       current: scopeRegistry.createAndAdd(this._scopeId, this._parentScope),
