@@ -22,16 +22,8 @@ export class Variable {
 
   static forEach = (string: string, fn: (varName: string) => void): void => {
     const matches = string.matchAll(/{(?<VAR_NAME>\S+)}/g);
-    if (!matches) {
-      return;
-    }
-
     for (const match of matches) {
-      const varName = match.groups?.['VAR_NAME'];
-      if (!varName) {
-        continue;
-      }
-
+      const varName = match.groups!['VAR_NAME'];
       fn(varName);
     }
   };
