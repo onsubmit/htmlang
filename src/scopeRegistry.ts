@@ -20,12 +20,12 @@ class ScopeRegistry {
     return scope;
   };
 
-  remove = (scope: Scope): void => {
-    if (!this._scopes.has(scope.id)) {
-      throw new Error(`Scope with id ${scope.id} is not registered`);
-    }
+  remove = (scopeId: string): boolean => {
+    return this._scopes.delete(scopeId);
+  };
 
-    this._scopes.delete(scope.id);
+  clear = (): void => {
+    this._scopes.clear();
   };
 
   createAndAdd = (id: string, parent: Scope | null): Scope => {

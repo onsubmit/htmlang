@@ -15,13 +15,14 @@ export class Declaration extends BaseHtmlangElement {
     while ((variable = this._variables.pop())) {
       this.parentScope.removeVariable(variable);
     }
+
+    super.disconnectedCallback();
   }
 
   execute = (): void => {
-    const parentScope = this._getParentScope();
     for (const attr of this.attributes) {
-      const variable = new Variable(this._type, attr.name, attr.value, parentScope);
-      parentScope.addVariable(variable);
+      const variable = new Variable(this._type, attr.name, attr.value, this.parentScope);
+      this.parentScope.addVariable(variable);
       this._variables.push(variable);
     }
   };

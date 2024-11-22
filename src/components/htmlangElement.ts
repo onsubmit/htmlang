@@ -14,6 +14,10 @@ export abstract class HtmlangElement extends HTMLElement {
     this.setAttribute = this._setAttribute;
   }
 
+  disconnectedCallback(): void {
+    scopeRegistry.remove(this._scopeId);
+  }
+
   get scope(): Scope {
     if (!scopeRegistry.has(this._scopeId)) {
       return this._registerScope().current;
@@ -32,7 +36,7 @@ export abstract class HtmlangElement extends HTMLElement {
 
   abstract execute(): void;
 
-  protected _getParentScope = (): Scope => {
+  private _getParentScope = (): Scope => {
     let parent = this.parentElement;
     while (parent !== null) {
       if (parent instanceof HtmlangElement) {

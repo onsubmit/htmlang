@@ -27,6 +27,8 @@ export class StatementDash extends BaseHtmlangElement {
     while ((variable = this._variables.pop())) {
       this.parentScope.removeVariable(variable);
     }
+
+    super.disconnectedCallback();
   }
 
   execute = (): void => {
