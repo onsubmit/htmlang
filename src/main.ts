@@ -13,21 +13,26 @@ import { scopeRegistry } from './scopeRegistry';
 const globalScope = scopeRegistry.createAndAdd('global', null);
 export { globalScope };
 
-const elements: Array<typeof BaseHtmlangElement> = [
-  ConsoleDash,
-  ConstDash,
-  ForDash,
-  IfDash,
-  LetDash,
-  ScopeDash,
-  StatementDash,
-];
+export function defineElements() {
+  const elements: Array<typeof BaseHtmlangElement> = [
+    ConsoleDash,
+    ConstDash,
+    ForDash,
+    IfDash,
+    LetDash,
+    ScopeDash,
+    StatementDash,
+  ];
 
-for (const element of elements) {
-  customElements.define(`${element.getTagName()}-`, element);
+  for (const element of elements) {
+    const name = `${element.getTagName()}-`;
+    if (!customElements.get(name)) {
+      customElements.define(name, element);
+    }
+  }
 }
 
-(function traverseDomTree(element: Element = document.body) {
+export function traverseDomTree(element: Element = document.body) {
   if (element instanceof HtmlangElement) {
     element.execute();
   }
@@ -35,4 +40,7 @@ for (const element of elements) {
   for (const child of element.children) {
     traverseDomTree(child);
   }
-})();
+}
+
+defineElements();
+traverseDomTree();

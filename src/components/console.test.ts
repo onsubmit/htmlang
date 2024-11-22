@@ -1,0 +1,30 @@
+import { traverseDomTree } from '../main';
+
+describe('console', () => {
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  it('should call console.log()', async () => {
+    const spy = vi.spyOn(console, 'log');
+
+    const container = document.createElement('div');
+    container.innerHTML = `<console- log(="Hello, world!" )></console->`;
+    document.body.appendChild(container);
+    traverseDomTree();
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith('Hello, world!');
+  });
+
+  it('should not call console.log() if attribute is empty', async () => {
+    const spy = vi.spyOn(console, 'log');
+
+    const container = document.createElement('div');
+    container.innerHTML = `<console- log(="" )></console->`;
+    document.body.appendChild(container);
+    traverseDomTree();
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+});
