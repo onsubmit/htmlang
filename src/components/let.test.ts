@@ -28,6 +28,21 @@ describe('let', () => {
     expectVariableToBe('j', 3);
   });
 
+  it('should reference other variables', () => {
+    const container = document.createElement('div');
+    container.innerHTML = `
+      <let- i="2" j="{i} * 2"></let->
+      <let- k="2 * {j}" l="{i} * {k}"></let->
+    `;
+    document.body.appendChild(container);
+    traverseDomTree();
+
+    expectVariableToBe('i', 2);
+    expectVariableToBe('j', 4);
+    expectVariableToBe('k', 8);
+    expectVariableToBe('l', 16);
+  });
+
   it('should allow changing the value', () => {
     const container = document.createElement('div');
     container.innerHTML = `
