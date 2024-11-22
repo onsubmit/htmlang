@@ -5,12 +5,27 @@ type LineType = 'assignment';
 
 export class StatementDash extends BaseHtmlangElement {
   static getTagName = () => 'statement' as const;
+  static observedAttributes = ['('];
+
+  private _evaluated = false;
+  private _variables: Array<Variable> = [];
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+    if (!this._evaluated) {
+      return;
+    }
+
     if (name === '(') {
       if (oldValue !== newValue) {
         this._evaluate(newValue);
       }
+    }
+  }
+
+  disconnectedCallback(): void {
+    let variable: Variable | undefined;
+    while ((variable = this._variables.pop())) {
+      this.parentScope.removeVariable(variable);
     }
   }
 
@@ -20,6 +35,8 @@ export class StatementDash extends BaseHtmlangElement {
   };
 
   private _evaluate = (line: string): void => {
+    this._evaluated = true;
+
     switch (this._getLineType(line)) {
       case 'assignment': {
         const [varName, valueStr] = line.split(' = ');
@@ -28,6 +45,7 @@ export class StatementDash extends BaseHtmlangElement {
           result.variable.set(valueStr);
         } else {
           const variable = new Variable('let', varName, valueStr, this.parentScope);
+          this._variables.push(variable);
           this.parentScope.addVariable(variable);
         }
       }

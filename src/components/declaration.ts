@@ -20,8 +20,6 @@ export class Declaration extends BaseHtmlangElement {
   execute = (): void => {
     const parentScope = this._getParentScope();
     for (const attr of this.attributes) {
-      if (!attr) continue;
-
       const variable = new Variable(this._type, attr.name, attr.value, parentScope);
       this._variables.push(variable);
       parentScope.addVariable(variable);

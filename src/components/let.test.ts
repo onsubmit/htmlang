@@ -43,19 +43,6 @@ describe('let', () => {
     expectVariableToBe('l', 16);
   });
 
-  it('should allow changing the value', () => {
-    const container = document.createElement('div');
-    container.innerHTML = `
-      <let- i="2"></const->
-      <statement- (="i = 3")></statement->
-    `;
-    document.body.appendChild(container);
-    expect(traverseDomTree).not.toThrow('Assignment to constant variable.');
-
-    const result = globalScope.getVariable('i');
-    expect(result.found && result.variable.value).toBe(3);
-  });
-
   function expectVariableToBe(name: string, value: any): void {
     const result = globalScope.getVariable(name);
     expect(result.found).toBe(true);

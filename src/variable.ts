@@ -28,6 +28,10 @@ export class Variable {
     }
   };
 
+  get type(): VariableType {
+    return this._type;
+  }
+
   get name(): string {
     return this._name;
   }

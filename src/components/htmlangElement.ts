@@ -7,6 +7,12 @@ import { scopeRegistry } from '../scopeRegistry';
 export abstract class HtmlangElement extends HTMLElement {
   private _scopeId = uuidv4();
   private _parentScope: Scope | null = null;
+  private _originalSetAttribute = this.setAttribute;
+
+  constructor() {
+    super();
+    this.setAttribute = this._setAttribute;
+  }
 
   get scope(): Scope {
     if (!scopeRegistry.has(this._scopeId)) {
@@ -45,6 +51,18 @@ export abstract class HtmlangElement extends HTMLElement {
       current: scopeRegistry.createAndAdd(this._scopeId, this._parentScope),
       parent: this._parentScope,
     };
+  };
+
+  private _setAttribute = (qualifiedName: string, value: string): void => {
+    try {
+      this._originalSetAttribute(qualifiedName, value);
+    } catch {
+      const parser = document.createElement('div');
+      parser.innerHTML = `<br ${qualifiedName} />`;
+      const attr = parser.firstElementChild!.attributes.removeNamedItem(qualifiedName);
+      attr.value = value;
+      this.attributes.setNamedItem(attr);
+    }
   };
 }
 
