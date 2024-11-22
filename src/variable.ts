@@ -49,15 +49,24 @@ export class Variable {
   };
 
   get value(): any {
-    let evaluable = this._raw;
+    const evaluable = this._expand(this._raw);
+    return eval(evaluable);
+  }
 
-    Variable.forEach(this._raw, (varName) => {
+  private _expand = (value: string): string => {
+    let evaluable = value;
+
+    Variable.forEach(value, (varName) => {
       const result = this._scope.getVariable(varName);
       if (result.found) {
         evaluable = evaluable.replaceAll(`{${varName}}`, result.variable._raw);
       }
     });
 
-    return eval(evaluable);
-  }
+    if (evaluable !== value) {
+      return this._expand(evaluable);
+    }
+
+    return value;
+  };
 }

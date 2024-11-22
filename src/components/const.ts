@@ -5,11 +5,12 @@ export class ConstDash extends BaseHtmlangElement {
   static getTagName = () => 'const';
 
   execute = () => {
-    const attr = this.attributes[0];
-    if (!attr) return;
-
     const parentScope = this._getParentScope();
-    const variable = new Variable('const', attr.name, attr.value, parentScope);
-    parentScope.addVariable(variable);
+    for (const attr of this.attributes) {
+      if (!attr) continue;
+
+      const variable = new Variable('const', attr.name, attr.value, parentScope);
+      parentScope.addVariable(variable);
+    }
   };
 }

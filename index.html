@@ -9,23 +9,24 @@
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
 
-    <const- i="2"></const->
-    <let- j="3"></let->
+    <const- i="2" j="{i} + 1"></const->
+    <let- k="{j} + 1" l="{i} + {j}"></let->
+    <console- log(="i: {i}, j: {j}, k: {k}, l: {l}" )></console->
     <const- bananas="'bananas'"></const->
     <if- (="{i} + {j} === 5" )>
       <console- log(="My favorite fruit is: {bananas}" )></console->
     </if->
 
-    <console- log(="j is {j}" )></console->
-    <statement- (="j = 4" )></statement->
-    <console- log(="j is now {j}" )></console->
+    <console- log(="k is {k}" )></console->
+    <statement- (="k = 5" )></statement->
+    <console- log(="k is now {k}" )></console->
     <scope->
-      <let- j="5"></let->
-      <console- log(="j in this scope is {j}" )></console->
-      <statement- (="j = 6" )></statement->
-      <console- log(="j in this scope is now {j}" )></console->
+      <let- k="6"></let->
+      <console- log(="k in this scope is {k}" )></console->
+      <statement- (="k = 7" )></statement->
+      <console- log(="k in this scope is now {k}" )></console->
     </scope->
-    <console- log(="j in previous scope is back to {j}" )></console->
+    <console- log(="k in previous scope is back to {k}" )></console->
 
     <const- fruits="['apples', 'oranges', {bananas}]"></const->
     <ul>
