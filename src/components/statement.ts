@@ -45,8 +45,8 @@ export class StatementDash extends BaseHtmlangElement {
           result.variable.set(valueStr);
         } else {
           const variable = new Variable('let', varName, valueStr, this.parentScope);
-          this._variables.push(variable);
           this.parentScope.addVariable(variable);
+          this._variables.push(variable);
         }
       }
     }

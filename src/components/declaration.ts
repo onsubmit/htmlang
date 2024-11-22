@@ -21,8 +21,8 @@ export class Declaration extends BaseHtmlangElement {
     const parentScope = this._getParentScope();
     for (const attr of this.attributes) {
       const variable = new Variable(this._type, attr.name, attr.value, parentScope);
-      this._variables.push(variable);
       parentScope.addVariable(variable);
+      this._variables.push(variable);
     }
   };
 }

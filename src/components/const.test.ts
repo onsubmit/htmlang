@@ -1,4 +1,5 @@
 import { globalScope, traverseDomTree } from '../main';
+import { ConstDash } from './const';
 
 describe('const', () => {
   afterEach(() => {
@@ -53,6 +54,33 @@ describe('const', () => {
     expectVariableToBe('j', 4);
     expectVariableToBe('k', 8);
     expectVariableToBe('l', 16);
+  });
+
+  it('should throw if variable is already declared', () => {
+    const container = document.createElement('div');
+    container.innerHTML = `
+      <const- i="2"></const->
+      <const- i="3"></const->
+    `;
+    document.body.appendChild(container);
+    expect(traverseDomTree).toThrow('Variable i is already defined in this scope.');
+  });
+
+  it('should remove declaration when scope is destroyed', () => {
+    const container = document.createElement('div');
+    container.innerHTML = `
+      <const- i="2"></const->
+    `;
+    document.body.appendChild(container);
+    traverseDomTree();
+
+    expectVariableToBe('i', 2);
+
+    const constDash = document.querySelector<ConstDash>('const-')!;
+    container.removeChild(constDash);
+
+    const { found } = globalScope.getVariable('i');
+    expect(found).toBe(false);
   });
 
   function expectVariableToBe(name: string, value: any): void {

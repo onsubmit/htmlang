@@ -30,7 +30,6 @@ class ScopeRegistry {
 
   createAndAdd = (id: string, parent: Scope | null): Scope => {
     const scope = new Scope(id, parent);
-    parent?.addChildScope(scope);
     this._add(scope);
     return scope;
   };
