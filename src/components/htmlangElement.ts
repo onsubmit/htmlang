@@ -5,7 +5,7 @@ import { Scope } from '../scope';
 import { scopeRegistry } from '../scopeRegistry';
 
 export abstract class HtmlangElement extends HTMLElement {
-  protected _scopeId = uuidv4();
+  private _scopeId = uuidv4();
   private _parentScope: Scope | null = null;
 
   get scope(): Scope {

@@ -1,6 +1,6 @@
 import { Scope } from './scope';
 
-type VariableType = 'let' | 'const';
+export type VariableType = 'let' | 'const';
 export class Variable {
   private _type: VariableType;
   private _name: string;

@@ -17,12 +17,20 @@ export class Scope {
     return this._id;
   }
 
-  addVariable = (variable: Variable) => {
+  addVariable = (variable: Variable): void => {
     if (this._variables.has(variable.name)) {
       throw new Error(`Variable ${variable.name} is already defined in this scope.`);
     }
 
     this._variables.set(variable.name, variable);
+  };
+
+  removeVariable = (variable: Variable): void => {
+    if (!this._variables.has(variable.name)) {
+      throw new Error(`Variable ${variable.name} not found in this scope.`);
+    }
+
+    this._variables.delete(variable.name);
   };
 
   getVariable = (name: string): { found: boolean; variable: Variable } | { found: false } => {
@@ -39,7 +47,7 @@ export class Scope {
     return { found: false };
   };
 
-  addChildScope = (child: Scope) => {
+  addChildScope = (child: Scope): void => {
     if (this._children.has(child.id)) {
       throw new Error(`Child scope with id ${child.id} already exists.`);
     }
