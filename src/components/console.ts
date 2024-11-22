@@ -2,9 +2,9 @@ import { Variable } from '../variable';
 import { BaseHtmlangElement } from './htmlangElement';
 
 export class ConsoleDash extends BaseHtmlangElement {
-  static getTagName = () => 'console';
+  static getTagName = () => 'console' as const;
 
-  execute = () => {
+  execute = (): void => {
     let log = this.getAttribute('log(');
     if (!log) {
       return;

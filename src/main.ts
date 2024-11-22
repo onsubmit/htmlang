@@ -13,7 +13,7 @@ import { scopeRegistry } from './scopeRegistry';
 const globalScope = scopeRegistry.createAndAdd('global', null);
 export { globalScope };
 
-export function defineElements() {
+export function defineElements(): void {
   const elements: Array<typeof BaseHtmlangElement> = [
     ConsoleDash,
     ConstDash,
@@ -32,7 +32,7 @@ export function defineElements() {
   }
 }
 
-export function traverseDomTree(element: Element = document.body) {
+export function traverseDomTree(element: Element = document.body): void {
   if (element instanceof HtmlangElement) {
     element.execute();
   }

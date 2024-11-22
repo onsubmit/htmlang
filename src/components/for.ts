@@ -2,17 +2,17 @@ import { Variable } from '../variable';
 import { BaseHtmlangElement } from './htmlangElement';
 
 export class ForDash extends BaseHtmlangElement {
-  static getTagName = () => 'for';
+  static getTagName = () => 'for' as const;
 
   static observedAttributes = ['('];
 
   _innerHtml: string | null = null;
 
-  connectedCallback() {
+  connectedCallback(): void {
     this._innerHtml = this.innerHTML;
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     if (this._innerHtml === null) {
       return;
     }
@@ -24,11 +24,11 @@ export class ForDash extends BaseHtmlangElement {
     }
   }
 
-  execute = () => {
+  execute = (): void => {
     this._loop(this.getAttribute('(') ?? '');
   };
 
-  private _loop(attribute: string) {
+  private _loop(attribute: string): void {
     this.innerHTML = '';
     const { varName, array } = this.getLoopParams(attribute);
 

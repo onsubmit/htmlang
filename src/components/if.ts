@@ -2,17 +2,17 @@ import { Variable } from '../variable';
 import { BaseHtmlangElement } from './htmlangElement';
 
 export class IfDash extends BaseHtmlangElement {
-  static getTagName = () => 'if';
+  static getTagName = () => 'if' as const;
 
   static observedAttributes = ['('];
 
   _innerHtml: string | null = null;
 
-  connectedCallback() {
+  connectedCallback(): void {
     this._innerHtml = this.innerHTML;
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     if (this._innerHtml === null) {
       return;
     }
@@ -26,7 +26,7 @@ export class IfDash extends BaseHtmlangElement {
     }
   }
 
-  execute = () => {
+  execute = (): void => {
     let condition = this.getAttribute('(');
     if (!condition) {
       throw new Error('No condition found');
@@ -43,7 +43,7 @@ export class IfDash extends BaseHtmlangElement {
     this._setCondition(!evaluated);
   };
 
-  _setCondition(value: boolean) {
+  _setCondition = (value: boolean): void => {
     this.innerHTML = (value && this._innerHtml) || '';
-  }
+  };
 }

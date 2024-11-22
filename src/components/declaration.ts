@@ -17,7 +17,7 @@ export class Declaration extends BaseHtmlangElement {
     }
   }
 
-  execute = () => {
+  execute = (): void => {
     const parentScope = this._getParentScope();
     for (const attr of this.attributes) {
       if (!attr) continue;

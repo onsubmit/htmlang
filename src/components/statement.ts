@@ -4,9 +4,9 @@ import { BaseHtmlangElement } from './htmlangElement';
 type LineType = 'assignment';
 
 export class StatementDash extends BaseHtmlangElement {
-  static getTagName = () => 'statement';
+  static getTagName = () => 'statement' as const;
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     if (name === '(') {
       if (oldValue !== newValue) {
         this._evaluate(newValue);
@@ -14,12 +14,12 @@ export class StatementDash extends BaseHtmlangElement {
     }
   }
 
-  execute = () => {
+  execute = (): void => {
     const line = this.getAttribute('(') ?? '';
     this._evaluate(line);
   };
 
-  private _evaluate(line: string) {
+  private _evaluate = (line: string): void => {
     switch (this._getLineType(line)) {
       case 'assignment': {
         const [varName, valueStr] = line.split(' = ');
@@ -32,7 +32,7 @@ export class StatementDash extends BaseHtmlangElement {
         }
       }
     }
-  }
+  };
 
   private _getLineType(line: string): LineType {
     if (line.match(/^\S+ = .+$/)) {
