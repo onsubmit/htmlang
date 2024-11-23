@@ -1,6 +1,8 @@
+import { traverseChildren } from '../main';
 import { Variable } from '../variable';
 import { ElseDash } from './else';
 import { BaseHtmlangElement } from './htmlangElement';
+import { IfDash } from './if';
 
 export class ElseIfDash extends BaseHtmlangElement {
   static getTagName = () => 'else-if' as const;
@@ -22,8 +24,38 @@ export class ElseIfDash extends BaseHtmlangElement {
     }
   }
 
+  attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+    if (this._innerHtml === null) {
+      return;
+    }
+
+    if (name === '(') {
+      const a = this._evaluate(oldValue);
+      const b = this._evaluate(newValue);
+      if (a !== b) {
+        // Traverse and find the top <if-> statement, and re-execute it.
+        let current: Element | null = this.previousElementSibling;
+        while (current !== null && !(current instanceof IfDash)) {
+          current = current.previousElementSibling;
+        }
+
+        current?.execute();
+      }
+    }
+  }
+
   execute = (): void => {
-    let condition = this.getAttribute('(');
+    const evaluated = this._evaluate(this.getAttribute('('));
+    this._setCondition(evaluated);
+  };
+
+  clear = (): void => {
+    this.innerHTML = '';
+    this._nextElse?.clear();
+  };
+
+  private _evaluate(value: string | null): boolean {
+    let condition = value;
     if (!condition) {
       throw new Error('No condition found');
     }
@@ -35,20 +67,23 @@ export class ElseIfDash extends BaseHtmlangElement {
     });
 
     const evaluated = !!eval(condition);
-    console.debug(`"${condition}" evaluated to ${evaluated}`);
-    this._setCondition(evaluated);
-  };
+    if (value === condition) {
+      console.debug(`"${condition}" -> ${evaluated}`);
+    } else {
+      console.debug(`"${value} -> "${condition}" -> ${evaluated}`);
+    }
 
-  clear = (): void => {
-    this.innerHTML = '';
-  };
+    return evaluated;
+  }
 
   _setCondition = (value: boolean): void => {
     if (value) {
       this.innerHTML = this._innerHtml ?? '';
       this._nextElse?.clear();
+      traverseChildren(this);
     } else {
       this.innerHTML = '';
+
       this._nextElse?.execute();
     }
   };

@@ -10,6 +10,7 @@ import { IfDash } from './components/if';
 import { LetDash } from './components/let';
 import { ScopeDash } from './components/scope';
 import { StatementDash } from './components/statement';
+import { ElementGraph, skipElement } from './elementGraph';
 import { scopeRegistry } from './scopeRegistry';
 
 const globalScope = scopeRegistry.createAndAdd('global', null);
@@ -36,16 +37,15 @@ export function defineElements(): void {
   }
 }
 
-const skipped = [ElseDash, ElseIfDash] as const;
-export function traverseDomTree(element: Element = document.body): void {
-  if (element instanceof HtmlangElement && !skipped.some((type) => element instanceof type)) {
-    element.execute();
-  }
-
+export function traverseChildren(element: Element): void {
   for (const child of element.children) {
-    traverseDomTree(child);
+    if (child instanceof HtmlangElement && !skipElement(child)) {
+      child.execute();
+    }
+
+    traverseChildren(child);
   }
 }
 
 defineElements();
-traverseDomTree();
+ElementGraph.build().execute();

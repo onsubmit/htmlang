@@ -1,4 +1,4 @@
-import { traverseDomTree } from '../main';
+import { traverseChildren } from '../main';
 import { Variable } from '../variable';
 import { ElseDash } from './else';
 import { ElseIfDash } from './elseIf';
@@ -29,17 +29,21 @@ export class IfDash extends BaseHtmlangElement {
     }
 
     if (name === '(') {
-      const a = !!eval(oldValue);
-      const b = !!eval(newValue);
+      const a = this._evaluate(oldValue);
+      const b = this._evaluate(newValue);
       if (a !== b) {
-        this._setCondition(b);
-        traverseDomTree(this);
+        this.execute();
       }
     }
   }
 
   execute = (): void => {
-    let condition = this.getAttribute('(');
+    const evaluated = this._evaluate(this.getAttribute('('));
+    this._setCondition(evaluated);
+  };
+
+  private _evaluate(value: string | null): boolean {
+    let condition = value;
     if (!condition) {
       throw new Error('No condition found');
     }
@@ -51,14 +55,20 @@ export class IfDash extends BaseHtmlangElement {
     });
 
     const evaluated = !!eval(condition);
-    console.debug(`"${condition}" evaluated to ${evaluated}`);
-    this._setCondition(evaluated);
-  };
+    if (value === condition) {
+      console.debug(`"${condition}" -> ${evaluated}`);
+    } else {
+      console.debug(`"${value} -> "${condition}" -> ${evaluated}`);
+    }
+
+    return evaluated;
+  }
 
   _setCondition = (value: boolean): void => {
     if (value) {
       this.innerHTML = this._innerHtml ?? '';
       this._nextElse?.clear();
+      traverseChildren(this);
     } else {
       this.innerHTML = '';
       this._nextElse?.execute();

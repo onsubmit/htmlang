@@ -1,4 +1,4 @@
-import { traverseDomTree } from '../main';
+import { ElementGraph } from '../elementGraph';
 import { ForDash } from './for';
 
 describe('for', () => {
@@ -21,7 +21,7 @@ describe('for', () => {
       </ul>
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(3);
     expect(spy).toHaveBeenNthCalledWith(1, 'apples');
@@ -43,7 +43,7 @@ describe('for', () => {
       </for->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(3);
     expect(spy).toHaveBeenNthCalledWith(1, '1');
@@ -66,7 +66,7 @@ describe('for', () => {
       </for->
     `;
     document.body.appendChild(container);
-    expect(traverseDomTree).toThrow(
+    expect(ElementGraph.build().execute).toThrow(
       'Attribute must be of the form "<variable> of <array>". Found: foo',
     );
   });
@@ -79,7 +79,7 @@ describe('for', () => {
       </for->
     `;
     document.body.appendChild(container);
-    expect(traverseDomTree).toThrow(
+    expect(ElementGraph.build().execute).toThrow(
       'Could not parse iterable from the attribute: item of 123. Found: 123',
     );
   });

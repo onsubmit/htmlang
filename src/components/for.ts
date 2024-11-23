@@ -1,4 +1,4 @@
-import { traverseDomTree } from '../main';
+import { traverseChildren } from '../main';
 import { Variable } from '../variable';
 import { BaseHtmlangElement } from './htmlangElement';
 
@@ -21,13 +21,14 @@ export class ForDash extends BaseHtmlangElement {
     if (name === '(') {
       if (oldValue !== newValue) {
         this._loop(newValue);
-        traverseDomTree(this);
+        traverseChildren(this);
       }
     }
   }
 
   execute = (): void => {
     this._loop(this.getAttribute('(') ?? '');
+    traverseChildren(this);
   };
 
   private _loop(attribute: string): void {

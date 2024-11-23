@@ -1,4 +1,5 @@
-import { globalScope, traverseDomTree } from '../main';
+import { ElementGraph } from '../elementGraph';
+import { globalScope } from '../main';
 import { ConstDash } from './const';
 
 describe('const', () => {
@@ -12,7 +13,7 @@ describe('const', () => {
       <const- i="2"></const->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
   });
@@ -23,7 +24,7 @@ describe('const', () => {
       <const- i="2" j="3"></const->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
     expectVariableToBe('j', 3);
@@ -36,7 +37,7 @@ describe('const', () => {
       <statement- (="i = 3")></statement->
     `;
     document.body.appendChild(container);
-    expect(traverseDomTree).toThrow('Assignment to constant variable.');
+    expect(ElementGraph.build().execute).toThrow('Assignment to constant variable.');
 
     expectVariableToBe('i', 2);
   });
@@ -48,7 +49,7 @@ describe('const', () => {
       <const- k="2 * {j}" l="{i} * {k}"></const->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
     expectVariableToBe('j', 4);
@@ -63,7 +64,7 @@ describe('const', () => {
       <const- i="3"></const->
     `;
     document.body.appendChild(container);
-    expect(traverseDomTree).toThrow('Variable i is already defined in this scope.');
+    expect(ElementGraph.build().execute).toThrow('Variable i is already defined in this scope.');
   });
 
   it('should remove declaration when scope is destroyed', () => {
@@ -72,7 +73,7 @@ describe('const', () => {
       <const- i="2"></const->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
 

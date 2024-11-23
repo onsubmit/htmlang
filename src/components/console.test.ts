@@ -1,4 +1,4 @@
-import { traverseDomTree } from '../main';
+import { ElementGraph } from '../elementGraph';
 
 describe('console', () => {
   afterEach(() => {
@@ -11,7 +11,7 @@ describe('console', () => {
     const container = document.createElement('div');
     container.innerHTML = `<console- log(="Hello, world!" )></console->`;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('Hello, world!');
@@ -23,7 +23,7 @@ describe('console', () => {
     const container = document.createElement('div');
     container.innerHTML = `<console- log(="" )></console->`;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).not.toHaveBeenCalled();
   });
@@ -37,7 +37,7 @@ describe('console', () => {
       <console- log(="{i} should be 2" )></console->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('2 should be 2');
@@ -51,7 +51,7 @@ describe('console', () => {
       <console- log(="{i} should be undefined" )></console->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('undefined should be undefined');

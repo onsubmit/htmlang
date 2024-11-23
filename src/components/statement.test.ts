@@ -1,4 +1,5 @@
-import { globalScope, traverseDomTree } from '../main';
+import { ElementGraph } from '../elementGraph';
+import { globalScope } from '../main';
 import { StatementDash } from './statement';
 
 describe('statement', () => {
@@ -14,7 +15,7 @@ describe('statement', () => {
         <statement- (="i = 3")></statement->
       `;
       document.body.appendChild(container);
-      traverseDomTree();
+      ElementGraph.build().execute();
 
       const result = globalScope.getVariable('i');
       expect(result.found && result.variable.value).toBe(3);
@@ -26,7 +27,7 @@ describe('statement', () => {
         <statement- (="i = 3")></statement->
       `;
       document.body.appendChild(container);
-      traverseDomTree();
+      ElementGraph.build().execute();
 
       const result = globalScope.getVariable('i');
       expect(result.found && result.variable.type).toBe('let');
@@ -40,7 +41,7 @@ describe('statement', () => {
         <statement- (="i = 3")></statement->
       `;
       document.body.appendChild(container);
-      traverseDomTree();
+      ElementGraph.build().execute();
 
       let result = globalScope.getVariable('i');
       expect(result.found && result.variable.value).toBe(3);
@@ -59,7 +60,7 @@ describe('statement', () => {
         <statement-></statement->
       `;
       document.body.appendChild(container);
-      expect(traverseDomTree).toThrow('Unrecognized line: ');
+      expect(ElementGraph.build().execute).toThrow('Unrecognized line: ');
     });
 
     it('should throw when line is not recognized', () => {
@@ -68,7 +69,7 @@ describe('statement', () => {
         <statement- (="")></statement->
       `;
       document.body.appendChild(container);
-      expect(traverseDomTree).toThrow('Unrecognized line: ');
+      expect(ElementGraph.build().execute).toThrow('Unrecognized line: ');
     });
   });
 });

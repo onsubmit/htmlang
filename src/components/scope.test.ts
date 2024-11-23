@@ -1,4 +1,5 @@
-import { globalScope, traverseDomTree } from '../main';
+import { ElementGraph } from '../elementGraph';
+import { globalScope } from '../main';
 import { Scope } from '../scope';
 import { ScopeDash } from './scope';
 
@@ -21,7 +22,7 @@ describe('scope', () => {
       <console- log(="outer scope: {i} should still be 2" )></console->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     const inner = document.querySelector<ScopeDash>('#inner')!;
 

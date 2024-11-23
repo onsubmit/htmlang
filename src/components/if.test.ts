@@ -1,6 +1,6 @@
 import { getByText, queryByText } from '@testing-library/dom';
 
-import { traverseDomTree } from '../main';
+import { ElementGraph } from '../elementGraph';
 import { IfDash } from './if';
 
 describe('if', () => {
@@ -18,7 +18,7 @@ describe('if', () => {
       </if->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('math is math');
@@ -35,7 +35,7 @@ describe('if', () => {
       </if->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('math is math');
@@ -58,7 +58,7 @@ describe('if', () => {
       </else->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('20 is large');
@@ -72,7 +72,7 @@ describe('if', () => {
       </if->
     `;
     document.body.appendChild(container);
-    expect(traverseDomTree).toThrow('No condition found');
+    expect(ElementGraph.build().execute).toThrow('No condition found');
   });
 
   it('should reevaluate reactively (true -> false)', () => {
@@ -86,7 +86,7 @@ describe('if', () => {
       </if->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenNthCalledWith(1, 'math is math');
@@ -110,7 +110,7 @@ describe('if', () => {
       </if->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expect(spy).not.toHaveBeenCalled();
     expect(queryByText(container, 'Hi there')).not.toBeInTheDocument();

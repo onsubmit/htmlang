@@ -1,4 +1,5 @@
-import { globalScope, traverseDomTree } from '../main';
+import { ElementGraph } from '../elementGraph';
+import { globalScope } from '../main';
 import { LetDash } from './let';
 
 describe('let', () => {
@@ -12,7 +13,7 @@ describe('let', () => {
       <let- i="2"></let->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
   });
@@ -23,7 +24,7 @@ describe('let', () => {
       <let- i="2" j="3"></let->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
     expectVariableToBe('j', 3);
@@ -36,7 +37,7 @@ describe('let', () => {
       <let- k="2 * {j}" l="{i} * {k}"></let->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
     expectVariableToBe('j', 4);
@@ -51,7 +52,7 @@ describe('let', () => {
       <let- i="3"></let->
     `;
     document.body.appendChild(container);
-    expect(traverseDomTree).toThrow('Variable i is already defined in this scope.');
+    expect(ElementGraph.build().execute).toThrow('Variable i is already defined in this scope.');
   });
 
   it('should remove declaration when scope is destroyed', () => {
@@ -60,7 +61,7 @@ describe('let', () => {
       <let- i="2"></let->
     `;
     document.body.appendChild(container);
-    traverseDomTree();
+    ElementGraph.build().execute();
 
     expectVariableToBe('i', 2);
 
