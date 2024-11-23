@@ -1,3 +1,4 @@
+import { traverseDomTree } from '../main';
 import { Variable } from '../variable';
 import { ElseDash } from './else';
 import { ElseIfDash } from './elseIf';
@@ -32,6 +33,7 @@ export class IfDash extends BaseHtmlangElement {
       const b = !!eval(newValue);
       if (a !== b) {
         this._setCondition(b);
+        traverseDomTree(this);
       }
     }
   }
