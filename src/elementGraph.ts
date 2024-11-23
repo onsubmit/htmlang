@@ -23,8 +23,10 @@ export class ElementGraph {
     }
 
     for (const child of element.children) {
-      if (child instanceof HtmlangElement && !skipElement(child)) {
-        ElementGraph.build(graph.elements.get(child), child);
+      if (child instanceof HtmlangElement) {
+        if (!skipElement(child)) {
+          ElementGraph.build(graph.elements.get(child), child);
+        }
       } else {
         ElementGraph.build(graph, child);
       }

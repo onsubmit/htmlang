@@ -7,6 +7,7 @@ import { scopeRegistry } from '../scopeRegistry';
 export abstract class HtmlangElement extends HTMLElement {
   private _scopeId = uuidv4();
   private _parentScope: Scope | null = null;
+  private _initialInnerHTML: string | null = null;
   private _originalSetAttribute = this.setAttribute;
 
   constructor() {
@@ -14,8 +15,16 @@ export abstract class HtmlangElement extends HTMLElement {
     this.setAttribute = this._setAttribute;
   }
 
+  connectedCallback(): void {
+    this._initialInnerHTML = this.innerHTML;
+  }
+
   disconnectedCallback(): void {
     scopeRegistry.remove(this._scopeId);
+  }
+
+  get initialInnerHTML(): string | null {
+    return this._initialInnerHTML;
   }
 
   get scope(): Scope {

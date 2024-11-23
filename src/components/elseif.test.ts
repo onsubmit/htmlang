@@ -13,7 +13,7 @@ describe('elseif', () => {
 
     const container = document.createElement('div');
     container.innerHTML = `
-      <const- i="1"></const ->
+      <const- i="1"></const->
       <if- (="1 === 2" )>
         <console- log(="nope" )></console->
       </if->
