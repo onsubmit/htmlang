@@ -56,7 +56,6 @@ describe('if', () => {
       <else->
         <console- log(="{i} is large" )></console->
       </else->
-
     `;
     document.body.appendChild(container);
     traverseDomTree();
@@ -65,7 +64,7 @@ describe('if', () => {
     expect(spy).toHaveBeenCalledWith('20 is large');
   });
 
-  it('should throw is condition is missing', () => {
+  it('should throw if condition is missing', () => {
     const container = document.createElement('div');
     container.innerHTML = `
       <if- (="" )>

@@ -1,7 +1,6 @@
 import { Variable } from '../variable';
 import { ElseDash } from './else';
 import { BaseHtmlangElement } from './htmlangElement';
-import { IfDash } from './if';
 
 export class ElseIfDash extends BaseHtmlangElement {
   static getTagName = () => 'else-if' as const;
@@ -13,6 +12,7 @@ export class ElseIfDash extends BaseHtmlangElement {
 
   connectedCallback(): void {
     this._innerHtml = this.innerHTML;
+    this.clear();
 
     if (
       this.nextElementSibling instanceof ElseIfDash ||
@@ -23,13 +23,6 @@ export class ElseIfDash extends BaseHtmlangElement {
   }
 
   execute = (): void => {
-    if (
-      !(this.previousElementSibling instanceof IfDash) &&
-      !(this.previousElementSibling instanceof ElseIfDash)
-    ) {
-      throw new Error('Corresponding <if-> or <else-if-> element not found');
-    }
-
     let condition = this.getAttribute('(');
     if (!condition) {
       throw new Error('No condition found');
