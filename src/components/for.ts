@@ -1,3 +1,4 @@
+import { traverseDomTree } from '../main';
 import { Variable } from '../variable';
 import { BaseHtmlangElement } from './htmlangElement';
 
@@ -20,6 +21,7 @@ export class ForDash extends BaseHtmlangElement {
     if (name === '(') {
       if (oldValue !== newValue) {
         this._loop(newValue);
+        traverseDomTree(this);
       }
     }
   }
@@ -38,12 +40,13 @@ export class ForDash extends BaseHtmlangElement {
   }
 
   private getLoopParams(attribute: string): { varName: string; array: Array<any> } {
-    const [varName, arrStr] = attribute.split(' of ');
+    const split = attribute.split(' of ').map((x) => x.trim());
 
-    if (!varName) {
-      throw new Array(`Could not parse the variable name from the attribute: ${attribute}`);
+    if (split.length !== 2) {
+      throw new Error(`Attribute must be of the form "<variable> of <array>". Found: ${attribute}`);
     }
 
+    const [varName, arrStr] = split;
     const arrVarName = Variable.getName(arrStr);
 
     let array: Array<any> | null = null;
@@ -57,7 +60,7 @@ export class ForDash extends BaseHtmlangElement {
     array = array ?? eval(arrStr);
 
     if (!Array.isArray(array)) {
-      throw new Array(`Could not parse iterable from the attribute: ${attribute}. Found: ${array}`);
+      throw new Error(`Could not parse iterable from the attribute: ${attribute}. Found: ${array}`);
     }
 
     return { varName, array };

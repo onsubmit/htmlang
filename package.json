@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "test": "vitest run src",
     "test:coverage": "vitest run src --coverage",
-    "test:watch": "vitest src"
+    "test:watch": "vitest src",
+    "test:watch:coverage": "vitest src --coverage",
+    "test:ui": "vitest --ui",
+    "test:ui:coverage": "vitest --ui --coverage"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -20,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
     "@vitest/coverage-istanbul": "^2.1.5",
+    "@vitest/ui": "^2.1.5",
     "eslint": "^9.15.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",

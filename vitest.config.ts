@@ -10,6 +10,7 @@ export default defineConfig({
     mockReset: true,
     coverage: {
       provider: 'istanbul',
+      include: ['src/**/*.ts'],
     },
   },
 });
