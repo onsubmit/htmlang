@@ -1,10 +1,10 @@
 import { Variable } from '../variable';
 import { ElseDash } from './else';
-import { ElseIfDash } from './elseIf';
 import { BaseHtmlangElement } from './htmlangElement';
+import { IfDash } from './if';
 
-export class IfDash extends BaseHtmlangElement {
-  static getTagName = () => 'if' as const;
+export class ElseIfDash extends BaseHtmlangElement {
+  static getTagName = () => 'else-if' as const;
 
   static observedAttributes = ['('];
 
@@ -22,21 +22,14 @@ export class IfDash extends BaseHtmlangElement {
     }
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-    if (this._innerHtml === null) {
-      return;
-    }
-
-    if (name === '(') {
-      const a = !!eval(oldValue);
-      const b = !!eval(newValue);
-      if (a !== b) {
-        this._setCondition(b);
-      }
-    }
-  }
-
   execute = (): void => {
+    if (
+      !(this.previousElementSibling instanceof IfDash) &&
+      !(this.previousElementSibling instanceof ElseIfDash)
+    ) {
+      throw new Error('Corresponding <if-> or <else-if-> element not found');
+    }
+
     let condition = this.getAttribute('(');
     if (!condition) {
       throw new Error('No condition found');
@@ -51,6 +44,10 @@ export class IfDash extends BaseHtmlangElement {
     const evaluated = !!eval(condition);
     console.debug(`"${condition}" evaluated to ${evaluated}`);
     this._setCondition(evaluated);
+  };
+
+  clear = (): void => {
+    this.innerHTML = '';
   };
 
   _setCondition = (value: boolean): void => {

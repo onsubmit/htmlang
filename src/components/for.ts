@@ -6,7 +6,7 @@ export class ForDash extends BaseHtmlangElement {
 
   static observedAttributes = ['('];
 
-  _innerHtml: string | null = null;
+  private _innerHtml: string | null = null;
 
   connectedCallback(): void {
     this._innerHtml = this.innerHTML;

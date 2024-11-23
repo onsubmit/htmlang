@@ -2,6 +2,8 @@ import './style.css';
 
 import { ConsoleDash } from './components/console';
 import { ConstDash } from './components/const';
+import { ElseDash } from './components/else';
+import { ElseIfDash } from './components/elseIf';
 import { ForDash } from './components/for';
 import { BaseHtmlangElement, HtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
@@ -17,6 +19,8 @@ export function defineElements(): void {
   const elements: Array<typeof BaseHtmlangElement> = [
     ConsoleDash,
     ConstDash,
+    ElseDash,
+    ElseIfDash,
     ForDash,
     IfDash,
     LetDash,
@@ -32,8 +36,9 @@ export function defineElements(): void {
   }
 }
 
+const skipped = [ElseDash, ElseIfDash] as const;
 export function traverseDomTree(element: Element = document.body): void {
-  if (element instanceof HtmlangElement) {
+  if (element instanceof HtmlangElement && !skipped.some((type) => element instanceof type)) {
     element.execute();
   }
 
