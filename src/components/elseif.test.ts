@@ -8,6 +8,32 @@ describe('elseif', () => {
     document.body.innerHTML = '';
   });
 
+  it('should execute an else-if', () => {
+    const spy = vi.spyOn(console, 'log');
+
+    const container = document.createElement('div');
+    container.innerHTML = `
+      <const- i="4"></const->
+      <if- (="{i} < 2" )>
+        <console- log(="{i} is small" )></console->
+      </if->
+      <else-if- (="{i} < 5")>
+        <console- log(="{i} is medium" )></console->
+      </else-if->
+      <else-if- (="{i} < 10")>
+        <console- log(="{i} is medium-large" )></console->
+      </else-if->
+      <else->
+        <console- log(="{i} is large" )></console->
+      </else->
+    `;
+    document.body.appendChild(container);
+    ElementGraph.build().execute();
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith('4 is medium');
+  });
+
   it('should expand variables', () => {
     const spy = vi.spyOn(console, 'log');
 

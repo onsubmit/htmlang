@@ -41,29 +41,6 @@ describe('if', () => {
     expect(spy).toHaveBeenCalledWith('math is math');
   });
 
-  it('should support else-if and else statements', () => {
-    const spy = vi.spyOn(console, 'log');
-
-    const container = document.createElement('div');
-    container.innerHTML = `
-      <const- i="20"></const->
-      <if- (="{i} < 2" )>
-        <console- log(="{i} is small" )></console->
-      </if->
-      <else-if- (="{i} < 5")>
-        <console- log(="{i} is medium" )></console->
-      </else-if->
-      <else->
-        <console- log(="{i} is large" )></console->
-      </else->
-    `;
-    document.body.appendChild(container);
-    ElementGraph.build().execute();
-
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith('20 is large');
-  });
-
   it('should throw if condition is missing', () => {
     const container = document.createElement('div');
     container.innerHTML = `
