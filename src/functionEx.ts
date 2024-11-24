@@ -14,11 +14,32 @@ export class FunctionEx {
     this._arguments = args;
   }
 
+  static forEach = (string: string, fn: (funcName: string, funcArgs: string) => void): boolean => {
+    const matches = string.matchAll(/(?<FUNC_NAME>[a-z\\-]+)\((?<FUNC_ARGS>.*)\)/g);
+    let foundMatch = false;
+    for (const match of matches) {
+      foundMatch = true;
+      const funcName = match.groups!['FUNC_NAME'];
+      let funcArgs = match.groups!['FUNC_ARGS'];
+      while (
+        FunctionEx.forEach(funcArgs, (_, funcArgs_) => {
+          funcArgs = funcArgs_;
+        })
+      ) {
+        continue;
+      }
+
+      fn(funcName, funcArgs);
+    }
+
+    return foundMatch;
+  };
+
   get name(): string {
     return this._name;
   }
 
-  execute = (caller: CallDash, ...args: any[]): any => {
+  execute = (caller: CallDash | null, ...args: any[]): any => {
     const variables: Array<Variable> = [];
     for (let i = 0; i < Math.min(args.length, this._arguments.length); i++) {
       const variable = new Variable(
@@ -32,12 +53,13 @@ export class FunctionEx {
     }
 
     traverseChildren(this._functionElement);
-    this._functionElement.setup(caller);
+    this._functionElement.applyResult(caller);
 
     for (const variable of variables) {
       this._functionElement.scope.removeVariable(variable);
     }
 
-    this._functionElement.teardown();
+    this._functionElement.cleanup();
+    return this._functionElement.lastReturnValue;
   };
 }

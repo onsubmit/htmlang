@@ -104,5 +104,13 @@ a + b + c
     <for- (="i of [3, 5, 6, 9, 10, 12, 15, 18]" )>
       <call- fizz-buzz(="{i}" )></call->
     </for->
+
+    <function- add-two(="num" )>
+      <return->{num} + 2</return->
+    </function->
+
+    <const- n="5"></const->
+    <const- value="add-two({n})"></const->
+    <console- log(="{n} + 2 = {value}" )></console->
   </body>
 </html>

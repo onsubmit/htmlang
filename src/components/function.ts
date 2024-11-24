@@ -6,9 +6,15 @@ import { HtmlangElement } from './htmlangElement';
 export class FunctionDash extends HtmlangElement {
   static getTagName = () => 'function' as const;
 
+  private _lastReturnValue: any;
+
   connectedCallback(): void {
     super.connectedCallback();
     this.style.display = 'none';
+  }
+
+  get lastReturnValue(): any {
+    return this._lastReturnValue;
   }
 
   execute = (): void => {
@@ -24,7 +30,15 @@ export class FunctionDash extends HtmlangElement {
     this.parentScope.addFunction(func);
   };
 
-  setup = (caller: CallDash): void => {
+  return = (value: any): void => {
+    this._lastReturnValue = value;
+  };
+
+  applyResult = (caller: CallDash | null): void => {
+    if (!caller) {
+      return;
+    }
+
     let innerHtml = this.initialInnerHTML ?? '';
     Variable.forEach(innerHtml, (varName) => {
       const result = this.scope.getVariable(varName);
@@ -34,7 +48,7 @@ export class FunctionDash extends HtmlangElement {
     caller.innerHTML = innerHtml;
   };
 
-  teardown = (): void => {
+  cleanup = (): void => {
     this.scope.clear();
   };
 }

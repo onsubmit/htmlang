@@ -1,3 +1,4 @@
+import { FunctionEx } from './functionEx';
 import { Scope } from './scope';
 
 export type VariableType = 'let' | 'const';
@@ -50,6 +51,17 @@ export class Variable {
   }
 
   private _expand = (value: string): string => {
+    let evaluable = this._expandVariables(value);
+    evaluable = this._expandFunctions(evaluable);
+
+    if (evaluable !== value) {
+      return this._expand(evaluable);
+    }
+
+    return value;
+  };
+
+  private _expandVariables(value: string): string {
     let evaluable = value;
 
     Variable.forEach(value, (varName) => {
@@ -59,10 +71,21 @@ export class Variable {
       }
     });
 
-    if (evaluable !== value) {
-      return this._expand(evaluable);
-    }
+    return evaluable;
+  }
 
-    return value;
-  };
+  private _expandFunctions(value: string): string {
+    let evaluable = value;
+    FunctionEx.forEach(value, (funcName, funcArgs) => {
+      const result = this._scope.getFunction(funcName);
+      const funcExpression = new RegExp(`${funcName}\\((.*)\\)`, 'g');
+      if (result.found) {
+        const args = funcArgs.split(',').map((x) => x.trim());
+        const returnValue = result.value.execute(null, ...args);
+        evaluable = evaluable.replaceAll(funcExpression, returnValue);
+      }
+    });
+
+    return evaluable;
+  }
 }

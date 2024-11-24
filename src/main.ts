@@ -10,6 +10,7 @@ import { FunctionDash } from './components/function';
 import { BaseHtmlangElement, HtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
 import { LetDash } from './components/let';
+import { ReturnDash } from './components/return';
 import { ScopeDash } from './components/scope';
 import { StatementDash } from './components/statement';
 import { ElementGraph, skipElementDuringBuild } from './elementGraph';
@@ -29,6 +30,7 @@ export function defineElements(): void {
     FunctionDash,
     IfDash,
     LetDash,
+    ReturnDash,
     ScopeDash,
     StatementDash,
   ];
