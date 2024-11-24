@@ -9,71 +9,17 @@
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
 
-    <ul>
-      <for- (="salary of [1e5, 2e5, 3e5, 4e5]" )>
-        <if- (="{salary} < 2e5" )>
-          <li>ngmi with only ${salary} 😭</li>
-        </if->
-        <else-if- (="{salary} < 3e5" )>
-          <li>Scraping by with ${salary} 🫥</li>
-        </else-if->
-        <else-if- (="{salary} < 4e5" )>
-          <li>${salary} is ok, I guess 😏</li>
-        </else-if->
-        <else->
-          <li>Retire already, moneybags 🤑</li>
-        </else->
-      </for->
-    </ul>
+    <function- func-name(="a, b, c" )>
+      <const- sum="{a} + {b} + {c}"></const->
+      <pre>
+a + b + c
+{a} + {b} + {c}
+{sum}
+      </pre>
+    </function->
 
-    <const- i="2" j="{i} + 1"></const->
-    <let- k="{j} + 1" l="{i} + {j}"></let->
-    <console- log(="i: {i}, j: {j}, k: {k}, l: {l}" )></console->
-    <const- bananas="'bananas'"></const->
-    <if- (="{i} + {j} === 5" )>
-      <console- log(="My favorite fruit is: {bananas}" )></console->
-    </if->
-
-    <if- (="1 + 1 === 3" )>
-      <console- log(="No it doesn't" )></console->
-    </if->
-    <else-if- (="1 + 1 === 4" )>
-      <console- log(="Still not right" )></console->
-    </else-if->
-    <else->
-      <console- log(="1 + 1 is 2 dummy" )></console->
-    </else->
-
-    <console- log(="k is {k}" )></console->
-    <statement- (="k = 5" )></statement->
-    <console- log(="k is now {k}" )></console->
-    <scope->
-      <let- k="6"></let->
-      <console- log(="k in this scope is {k}" )></console->
-      <statement- (="k = 7" )></statement->
-      <console- log(="k in this scope is now {k}" )></console->
-    </scope->
-    <console- log(="k in previous scope is back to {k}" )></console->
-
-    <const- fruits="['apples', 'oranges', {bananas}]"></const->
-    <ul>
-      <for- (="fruit of {fruits}" )>
-        <li>Fruit: {fruit}</li>
-        <console- log(="Logging fruit: {fruit}" )></console->
-      </for->
-    </ul>
-
-    <const- name="'Andy'"></const->
-    <console- log(="Hi, my name is {name}" )></console->
-    <scope->
-      <const- name="'Joe'"></const->
-      <const- age="42"></const->
-      <console- log(="Hi, my name is now {name}" )></console->
-      <console- log(="I am {age} years old" )></console->
-      <scope->
-        <console- log(="I am still {age} years old" )></console->
-      </scope->
-    </scope->
-    <console- log(="Hi, my name is {name} again" )></console->
+    <call- func-name(="1, 2, 3" )></call->
+    <call- func-name(="10, 20, 30" )></call->
+    <call- func-name(="'👁️', '💗', '🦋'" )></call->
   </body>
 </html>

@@ -1,12 +1,18 @@
 import { ElseDash } from './components/else';
 import { ElseIfDash } from './components/elseIf';
 import { ForDash } from './components/for';
+import { FunctionDash } from './components/function';
 import { HtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
 
-const skipped = [ElseDash, ElseIfDash] as const;
-export function skipElement(element: Element): boolean {
-  return skipped.some((type) => element instanceof type);
+const skipDuringBuild = [ElseDash, ElseIfDash] as const;
+export function skipElementDuringBuild(element: Element): boolean {
+  return skipDuringBuild.some((type) => element instanceof type);
+}
+
+const skipDuringExecution = [ForDash, FunctionDash, IfDash] as const;
+export function skipElementDuringExecution(element: Element): boolean {
+  return skipDuringExecution.some((type) => element instanceof type);
 }
 
 export class ElementGraph {
@@ -17,14 +23,14 @@ export class ElementGraph {
     element: Element = document.body,
   ): ElementGraph => {
     for (const child of element.children) {
-      if (child instanceof HtmlangElement && !skipElement(child)) {
+      if (child instanceof HtmlangElement && !skipElementDuringBuild(child)) {
         graph.addElement(child);
       }
     }
 
     for (const child of element.children) {
       if (child instanceof HtmlangElement) {
-        if (!skipElement(child)) {
+        if (!skipElementDuringBuild(child)) {
           ElementGraph.build(graph.elements.get(child), child);
         }
       } else {
@@ -39,7 +45,7 @@ export class ElementGraph {
     for (const [element, childGraph] of this.elements.entries()) {
       element.execute();
 
-      if (element instanceof IfDash || element instanceof ForDash) {
+      if (skipElementDuringExecution(element)) {
         continue;
       }
 

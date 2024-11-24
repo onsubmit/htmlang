@@ -1,13 +1,17 @@
+import { FunctionEx } from './functionEx';
 import { Variable } from './variable';
 
+type Result<T> = { found: true; value: T } | { found: false; value: undefined };
 export class Scope {
   private _id: string;
   private _variables: Map<string, Variable>;
+  private _functions: Map<string, FunctionEx>;
   private _parent: Scope | null;
 
   constructor(id: string, parent: Scope | null) {
     this._id = id;
     this._variables = new Map();
+    this._functions = new Map();
     this._parent = parent;
   }
 
@@ -31,17 +35,38 @@ export class Scope {
     this._variables.delete(variable.name);
   };
 
-  getVariable = (name: string): { found: boolean; variable: Variable } | { found: false } => {
-    let current: Scope | null = this;
-    while (current != null) {
-      const variable = current._variables.get(name);
-      if (variable) {
-        return { found: true, variable };
-      }
+  getVariable = (name: string): Result<Variable> => {
+    return this._getItem(name, this._variables);
+  };
 
-      current = this._parent;
+  addFunction = (func: FunctionEx): void => {
+    if (this._functions.has(func.name)) {
+      throw new Error(`Function ${func.name} is already defined in this scope.`);
     }
 
-    return { found: false };
+    this._functions.set(func.name, func);
+  };
+
+  getFunction = (name: string): Result<FunctionEx> => {
+    return this._getItem(name, this._functions);
+  };
+
+  clear = (): void => {
+    this._variables.clear();
+    this._functions.clear();
+  };
+
+  private _getItem = <T>(name: string, map: Map<string, T>): Result<T> => {
+    let current: Scope | null = this;
+    while (current != null) {
+      const func = map.get(name);
+      if (func) {
+        return { found: true, value: func };
+      }
+
+      current = current._parent;
+    }
+
+    return { found: false, value: undefined };
   };
 }

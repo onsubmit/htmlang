@@ -38,6 +38,6 @@ describe('scope', () => {
   function expectVariableToBe(scope: Scope, name: string, value: any): void {
     const result = scope.getVariable(name);
     expect(result.found).toBe(true);
-    expect(result.found && result.variable.value).toBe(value);
+    expect(result.found && result.value.value).toBe(value);
   }
 });

@@ -45,7 +45,7 @@ export class IfDash extends BaseHtmlangElement {
 
     Variable.forEach(condition, (varName) => {
       const result = this.parentScope.getVariable(varName);
-      const value = result.found ? result.variable.value : undefined;
+      const value = result.found ? result.value.value : undefined;
       condition = condition!.replaceAll(`{${varName}}`, value);
     });
 

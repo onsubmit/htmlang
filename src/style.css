@@ -2,6 +2,12 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+pre {
+  font-family: 'jetbrains mono', monospace;
+  border-bottom: 1px solid #666;
+  margin: 1rem;
+}
+
 :root {
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;

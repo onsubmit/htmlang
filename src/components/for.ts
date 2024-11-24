@@ -53,7 +53,7 @@ export class ForDash extends BaseHtmlangElement {
     if (arrVarName) {
       const result = this.parentScope.getVariable(arrVarName);
       if (result.found) {
-        array = result.variable.value;
+        array = result.value.value;
       }
     }
 

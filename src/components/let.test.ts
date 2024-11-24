@@ -75,6 +75,6 @@ describe('let', () => {
   function expectVariableToBe(name: string, value: any): void {
     const result = globalScope.getVariable(name);
     expect(result.found).toBe(true);
-    expect(result.found && result.variable.value).toBe(value);
+    expect(result.found && result.value.value).toBe(value);
   }
 });

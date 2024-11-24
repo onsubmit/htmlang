@@ -12,7 +12,7 @@ export class ConsoleDash extends BaseHtmlangElement {
 
     Variable.forEach(log, (varName) => {
       const result = this.parentScope.getVariable(varName);
-      const value = result.found ? result.variable.value : undefined;
+      const value = result.found ? result.value.value : undefined;
       log = log!.replaceAll(`{${varName}}`, value);
     });
 

@@ -55,7 +55,7 @@ export class Variable {
     Variable.forEach(value, (varName) => {
       const result = this._scope.getVariable(varName);
       if (result.found) {
-        evaluable = evaluable.replaceAll(`{${varName}}`, result.variable._raw);
+        evaluable = evaluable.replaceAll(`{${varName}}`, result.value._raw);
       }
     });
 

@@ -18,7 +18,7 @@ describe('statement', () => {
       ElementGraph.build().execute();
 
       const result = globalScope.getVariable('i');
-      expect(result.found && result.variable.value).toBe(3);
+      expect(result.found && result.value.value).toBe(3);
     });
 
     it('should declare a let variable if not found', () => {
@@ -30,8 +30,8 @@ describe('statement', () => {
       ElementGraph.build().execute();
 
       const result = globalScope.getVariable('i');
-      expect(result.found && result.variable.type).toBe('let');
-      expect(result.found && result.variable.value).toBe(3);
+      expect(result.found && result.value.type).toBe('let');
+      expect(result.found && result.value.value).toBe(3);
     });
 
     it('should reevaluate reactively', () => {
@@ -44,14 +44,14 @@ describe('statement', () => {
       ElementGraph.build().execute();
 
       let result = globalScope.getVariable('i');
-      expect(result.found && result.variable.value).toBe(3);
+      expect(result.found && result.value.value).toBe(3);
 
       const statement = document.querySelector<StatementDash>('statement-')!;
       statement.setAttribute('(', 'j = 4');
       expect(statement.getAttribute('(')).toBe('j = 4');
 
       result = globalScope.getVariable('j');
-      expect(result.found && result.variable.value).toBe(4);
+      expect(result.found && result.value.value).toBe(4);
     });
 
     it('should throw when missing ( attribute', () => {

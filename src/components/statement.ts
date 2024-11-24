@@ -44,7 +44,7 @@ export class StatementDash extends BaseHtmlangElement {
         const [varName, valueStr] = line.split(' = ');
         const result = this.parentScope.getVariable(varName);
         if (result.found) {
-          result.variable.set(valueStr);
+          result.value.set(valueStr);
         } else {
           const variable = new Variable('let', varName, valueStr, this.parentScope);
           this.parentScope.addVariable(variable);
