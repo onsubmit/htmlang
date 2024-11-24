@@ -27,18 +27,8 @@ export class FunctionDash extends HtmlangElement {
   setup = (caller: CallDash): void => {
     let innerHtml = this.initialInnerHTML ?? '';
     Variable.forEach(innerHtml, (varName) => {
-      let variable: Variable | undefined;
-      const resultFuncScope = this.scope.getVariable(varName);
-      if (resultFuncScope.found) {
-        variable = resultFuncScope.value;
-      } else {
-        const resultParentScope = this.parentScope.getVariable(varName);
-        if (resultParentScope.found) {
-          variable = resultParentScope.value;
-        }
-      }
-
-      innerHtml = innerHtml!.replaceAll(`{${varName}}`, variable?.value);
+      const result = this.scope.getVariable(varName);
+      innerHtml = innerHtml!.replaceAll(`{${varName}}`, result.value?.value);
     });
 
     caller.innerHTML = innerHtml;
