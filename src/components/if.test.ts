@@ -29,7 +29,7 @@ describe('if', () => {
 
     const container = document.createElement('div');
     container.innerHTML = `
-      <const- i="1"></const ->
+      <const- i="1"></const->
       <if- (="{i} + {i} === 2" )>
         <console- log(="math is math" )></console->
       </if->

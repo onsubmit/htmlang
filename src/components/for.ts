@@ -28,7 +28,6 @@ export class ForDash extends BaseHtmlangElement {
     const { varName, array } = this.getLoopParams(attribute);
 
     for (const item of array) {
-      //this.innerHTML += this.initialInnerHTML!.replaceAll(`{${varName}}`, item);
       const div = document.createElement('div');
       div.style.display = 'none';
       div.innerHTML = this.initialInnerHTML!.replaceAll(`{${varName}}`, item);

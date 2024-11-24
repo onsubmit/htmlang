@@ -16,25 +16,21 @@ export function skipElementDuringExecution(element: Element): boolean {
 }
 
 export class ElementGraph {
-  elements: Map<HtmlangElement, ElementGraph>;
+  elements: Map<Element, ElementGraph>;
 
   static build = (
     graph: ElementGraph = new ElementGraph(),
     element: Element = document.body,
   ): ElementGraph => {
     for (const child of element.children) {
-      if (child instanceof HtmlangElement && !skipElementDuringBuild(child)) {
+      if (!skipElementDuringBuild(child)) {
         graph.addElement(child);
       }
     }
 
     for (const child of element.children) {
-      if (child instanceof HtmlangElement) {
-        if (!skipElementDuringBuild(child)) {
-          ElementGraph.build(graph.elements.get(child), child);
-        }
-      } else {
-        ElementGraph.build(graph, child);
+      if (!skipElementDuringBuild(child)) {
+        ElementGraph.build(graph.elements.get(child), child);
       }
     }
 
@@ -43,10 +39,12 @@ export class ElementGraph {
 
   execute = (): void => {
     for (const [element, childGraph] of this.elements.entries()) {
-      element.execute();
+      if (element instanceof HtmlangElement) {
+        element.execute();
 
-      if (skipElementDuringExecution(element)) {
-        continue;
+        if (skipElementDuringExecution(element)) {
+          continue;
+        }
       }
 
       childGraph.execute();
@@ -57,7 +55,7 @@ export class ElementGraph {
     this.elements = new Map();
   }
 
-  addElement = (element: HtmlangElement): void => {
+  addElement = (element: Element): void => {
     this.elements.set(element, new ElementGraph());
   };
 }

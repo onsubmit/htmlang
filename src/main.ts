@@ -47,9 +47,19 @@ export function traverseChildren(element: Element): void {
       child.execute();
     }
 
+    if (
+      child instanceof IfDash ||
+      child instanceof ElseIfDash ||
+      child instanceof ElseDash ||
+      child instanceof CallDash
+    ) {
+      continue;
+    }
+
     traverseChildren(child);
   }
 }
 
 defineElements();
-ElementGraph.build().execute();
+const graph = ElementGraph.build();
+graph.execute();
