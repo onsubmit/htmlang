@@ -88,5 +88,21 @@ a + b + c
     <call- func-name(="1, 2, 3" )></call->
     <call- func-name(="10, 20, 30" )></call->
     <call- func-name(="'👁️', '💗', '🦋'" )></call->
+
+    <function- fizz-buzz(="num" )>
+      <if- (="{num} % 15 === 0" )>
+        <console- log(="{num}: FizzBuzz" )></console->
+      </if->
+      <else-if- (="{num} % 3 === 0" )>
+        <console- log(="{num}: Fizz" )></console->
+      </else-if->
+      <else-if- (="{num} % 5 === 0" )>
+        <console- log(="{num}: Buzz" )></console->
+      </else-if->
+    </function->
+
+    <for- (="i of [3, 5, 6, 9, 10, 12, 15, 18]" )>
+      <call- fizz-buzz(="{i}" )></call->
+    </for->
   </body>
 </html>
