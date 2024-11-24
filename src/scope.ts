@@ -36,7 +36,17 @@ export class Scope {
   };
 
   getVariable = (name: string): Result<Variable> => {
-    return this._getItem(name, this._variables);
+    let current: Scope | null = this;
+    while (current != null) {
+      const func = current._variables.get(name);
+      if (func) {
+        return { found: true, value: func };
+      }
+
+      current = current._parent;
+    }
+
+    return { found: false, value: undefined };
   };
 
   addFunction = (func: FunctionEx): void => {
@@ -48,18 +58,9 @@ export class Scope {
   };
 
   getFunction = (name: string): Result<FunctionEx> => {
-    return this._getItem(name, this._functions);
-  };
-
-  clear = (): void => {
-    this._variables.clear();
-    this._functions.clear();
-  };
-
-  private _getItem = <T>(name: string, map: Map<string, T>): Result<T> => {
     let current: Scope | null = this;
     while (current != null) {
-      const func = map.get(name);
+      const func = current._functions.get(name);
       if (func) {
         return { found: true, value: func };
       }
@@ -68,5 +69,10 @@ export class Scope {
     }
 
     return { found: false, value: undefined };
+  };
+
+  clear = (): void => {
+    this._variables.clear();
+    this._functions.clear();
   };
 }
