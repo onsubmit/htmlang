@@ -1,5 +1,6 @@
 import './style.css';
 
+import { AlertDash } from './components/alert';
 import { ConsoleDash } from './components/console';
 import { ConstDash } from './components/const';
 import { ElseDash } from './components/else';
@@ -18,6 +19,7 @@ export { globalScope };
 
 export function defineElements(): void {
   const elements: Array<typeof BaseHtmlangElement> = [
+    AlertDash,
     ConsoleDash,
     ConstDash,
     ElseDash,
