@@ -9,19 +9,6 @@ export class IfDash extends BaseHtmlangElement {
 
   static observedAttributes = ['('];
 
-  private _nextElse: ElseDash | ElseIfDash | null = null;
-
-  connectedCallback(): void {
-    super.connectedCallback();
-
-    if (
-      this.nextElementSibling instanceof ElseIfDash ||
-      this.nextElementSibling instanceof ElseDash
-    ) {
-      this._nextElse = this.nextElementSibling;
-    }
-  }
-
   attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     if (this.initialInnerHTML === null) {
       return;
@@ -33,6 +20,15 @@ export class IfDash extends BaseHtmlangElement {
       if (a !== b) {
         this.execute();
       }
+    }
+  }
+
+  private get _nextElse(): ElseDash | ElseIfDash | undefined {
+    if (
+      this.nextElementSibling instanceof ElseIfDash ||
+      this.nextElementSibling instanceof ElseDash
+    ) {
+      return this.nextElementSibling;
     }
   }
 

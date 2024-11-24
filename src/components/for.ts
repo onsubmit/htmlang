@@ -7,10 +7,6 @@ export class ForDash extends BaseHtmlangElement {
 
   static observedAttributes = ['('];
 
-  connectedCallback(): void {
-    super.connectedCallback();
-  }
-
   attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     if (this.initialInnerHTML === null) {
       return;
