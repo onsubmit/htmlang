@@ -7,28 +7,24 @@ export class ForDash extends BaseHtmlangElement {
 
   static observedAttributes = ['('];
 
-  private _innerHtml: string | null = null;
-
   connectedCallback(): void {
-    this._innerHtml = this.innerHTML;
+    super.connectedCallback();
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-    if (this._innerHtml === null) {
+    if (this.initialInnerHTML === null) {
       return;
     }
 
     if (name === '(') {
       if (oldValue !== newValue) {
         this._loop(newValue);
-        traverseChildren(this);
       }
     }
   }
 
   execute = (): void => {
     this._loop(this.getAttribute('(') ?? '');
-    traverseChildren(this);
   };
 
   private _loop(attribute: string): void {
@@ -36,7 +32,14 @@ export class ForDash extends BaseHtmlangElement {
     const { varName, array } = this.getLoopParams(attribute);
 
     for (const item of array) {
-      this.innerHTML += this._innerHtml!.replaceAll(`{${varName}}`, item);
+      //this.innerHTML += this.initialInnerHTML!.replaceAll(`{${varName}}`, item);
+      const div = document.createElement('div');
+      div.style.display = 'none';
+      div.innerHTML = this.initialInnerHTML!.replaceAll(`{${varName}}`, item);
+      this.appendChild(div);
+      traverseChildren(div);
+      this.removeChild(div);
+      this.innerHTML += div.innerHTML;
     }
   }
 

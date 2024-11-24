@@ -9,6 +9,23 @@
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
 
+    <ul>
+      <for- (="salary of [1e5, 2e5, 3e5, 4e5]" )>
+        <if- (="{salary} < 2e5" )>
+          <li>ngmi with only ${salary} 😭</li>
+        </if->
+        <else-if- (="{salary} < 3e5" )>
+          <li>Scraping by with ${salary} 🫥</li>
+        </else-if->
+        <else-if- (="{salary} < 4e5" )>
+          <li>${salary} is ok, I guess 😏</li>
+        </else-if->
+        <else->
+          <li>Retire already, moneybags 🤑</li>
+        </else->
+      </for->
+    </ul>
+
     <const- i="2" j="{i} + 1"></const->
     <let- k="{j} + 1" l="{i} + {j}"></let->
     <console- log(="i: {i}, j: {j}, k: {k}, l: {l}" )></console->
