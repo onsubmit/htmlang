@@ -4,6 +4,7 @@ import { ConsoleDash } from './components/console';
 import { ConstDash } from './components/const';
 import { ElseDash } from './components/else';
 import { ElseIfDash } from './components/elseIf';
+import { EventDash } from './components/event';
 import { ForDash } from './components/for';
 import { BaseHtmlangElement, HtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
@@ -22,6 +23,7 @@ export function defineElements(): void {
     ConstDash,
     ElseDash,
     ElseIfDash,
+    EventDash,
     ForDash,
     IfDash,
     LetDash,
