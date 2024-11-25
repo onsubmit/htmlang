@@ -20,15 +20,8 @@ export class FunctionEx {
     for (const match of matches) {
       foundMatch = true;
       const funcName = match.groups!['FUNC_NAME'];
-      let funcArgs = match.groups!['FUNC_ARGS'];
-      while (
-        FunctionEx.forEach(funcArgs, (_, funcArgs_) => {
-          funcArgs = funcArgs_;
-        })
-      ) {
-        continue;
-      }
-
+      const funcArgs = match.groups!['FUNC_ARGS'];
+      FunctionEx.forEach(funcArgs, fn);
       fn(funcName, funcArgs);
     }
 

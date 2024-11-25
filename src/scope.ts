@@ -27,12 +27,8 @@ export class Scope {
     this._variables.set(variable.name, variable);
   };
 
-  removeVariable = (variable: Variable): void => {
-    if (!this._variables.has(variable.name)) {
-      throw new Error(`Variable ${variable.name} not found in this scope.`);
-    }
-
-    this._variables.delete(variable.name);
+  removeVariable = (variable: Variable): boolean => {
+    return this._variables.delete(variable.name);
   };
 
   getVariable = (name: string): Result<Variable> => {
@@ -55,6 +51,10 @@ export class Scope {
     }
 
     this._functions.set(func.name, func);
+  };
+
+  removeFunction = (func: FunctionEx): boolean => {
+    return this._functions.delete(func.name);
   };
 
   getFunction = (name: string): Result<FunctionEx> => {

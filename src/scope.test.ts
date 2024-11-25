@@ -22,10 +22,10 @@ describe('Scope', () => {
     expect(scope.getVariable('name').found).toBe(false);
   });
 
-  it('should throw when removing an unknown variable', () => {
+  it('should return false when removing an unknown variable', () => {
     const scope = new Scope('id', null);
     const variable = new Variable('const', 'name', '10', scope);
-    expect(() => scope.removeVariable(variable)).toThrow('Variable name not found in this scope.');
+    expect(scope.removeVariable(variable)).toBe(false);
   });
 
   function expectVariableToBe(scope: Scope, name: string, value: any): void {
