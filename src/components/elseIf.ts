@@ -48,7 +48,7 @@ export class ElseIfDash extends BaseHtmlangElement {
     this._nextElse?.clear();
   };
 
-  private _evaluate(value: string | null): boolean {
+  private _evaluate = (value: string | null): boolean => {
     if (!value) {
       throw new Error('No condition found');
     }
@@ -62,7 +62,7 @@ export class ElseIfDash extends BaseHtmlangElement {
     }
 
     return evaluated;
-  }
+  };
 
   _setCondition = (value: boolean): void => {
     if (value) {

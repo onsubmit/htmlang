@@ -1,3 +1,5 @@
+import { CaseDash } from './components/case';
+import { DefaultDash } from './components/default';
 import { ElseDash } from './components/else';
 import { ElseIfDash } from './components/elseIf';
 import { ForDash } from './components/for';
@@ -5,7 +7,7 @@ import { FunctionDash } from './components/function';
 import { HtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
 
-const skipDuringBuild = [ElseDash, ElseIfDash] as const;
+const skipDuringBuild = [ElseDash, ElseIfDash, CaseDash, DefaultDash] as const;
 export function skipElementDuringBuild(element: Element): boolean {
   return skipDuringBuild.some((type) => element instanceof type);
 }

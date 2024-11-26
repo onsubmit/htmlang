@@ -1,8 +1,11 @@
 import './style.css';
 
+import { BreakDash } from './components/break';
 import { CallDash } from './components/callDash';
+import { CaseDash } from './components/case';
 import { ConsoleDash } from './components/console';
 import { ConstDash } from './components/const';
+import { DefaultDash } from './components/default';
 import { ElseDash } from './components/else';
 import { ElseIfDash } from './components/elseIf';
 import { ForDash } from './components/for';
@@ -13,6 +16,7 @@ import { LetDash } from './components/let';
 import { ReturnDash } from './components/return';
 import { ScopeDash } from './components/scope';
 import { StatementDash } from './components/statement';
+import { SwitchDash } from './components/switch';
 import { ElementGraph, skipElementDuringBuild } from './elementGraph';
 import { scopeRegistry } from './scopeRegistry';
 
@@ -21,9 +25,12 @@ export { globalScope };
 
 export function defineElements(): void {
   const elements: Array<typeof BaseHtmlangElement> = [
+    BreakDash,
     CallDash,
+    CaseDash,
     ConsoleDash,
     ConstDash,
+    DefaultDash,
     ElseDash,
     ElseIfDash,
     ForDash,
@@ -32,6 +39,7 @@ export function defineElements(): void {
     LetDash,
     ReturnDash,
     ScopeDash,
+    SwitchDash,
     StatementDash,
   ];
 
@@ -53,7 +61,8 @@ export function traverseChildren(element: Element): void {
       child instanceof IfDash ||
       child instanceof ElseIfDash ||
       child instanceof ElseDash ||
-      child instanceof CallDash
+      child instanceof CallDash ||
+      child instanceof SwitchDash
     ) {
       continue;
     }

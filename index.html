@@ -112,5 +112,27 @@ a + b + c
     <const- n="5"></const->
     <const- value="add-two({n})"></const->
     <console- log(="{n} + 2 = {value}" )></console->
+
+    <function- is-prime(="num" )>
+      <switch- (="{num}" )>
+        <case- (="0" )></case->
+        <case- (="1" )>
+          <console- log(="{num}: not prime" )></console->
+          <break->
+        </case->
+        <case- (="2" )>
+          <console- log(="{num}: prime!" )></console->
+          <break-></break->
+        </case->
+        <default->
+          <console- log(="{num}: 🤷‍♂️" )></console->
+        </default->
+      </switch->
+    </function->
+
+    <call- is-prime(="0" )></call->
+    <call- is-prime(="1" )></call->
+    <call- is-prime(="2" )></call->
+    <call- is-prime(="3" )></call->
   </body>
 </html>
