@@ -1,3 +1,5 @@
+import { getByTestId, getByText } from '@testing-library/dom';
+
 import { ElementGraph } from '../elementGraph';
 
 describe('function', () => {
@@ -45,6 +47,34 @@ describe('function', () => {
     for (const num of [...Array(max).keys()]) {
       expect(spy).toHaveBeenNthCalledWith(num + 1, fizzBuzz(num));
     }
+  });
+
+  it('should support non-HtmlangElements', () => {
+    const container = document.createElement('div');
+    container.innerHTML = `
+    <function- func-name(="a, b, c" )>
+      <const- sum="{a} + {b} + {c}"></const->
+      <p>{a} + {b} + {c}</p>
+      <p>{sum}</p>
+    </function->
+
+    <call- func-name(="1, 2, 3" ) data-testid="call1"></call->
+    <call- func-name(="'a', 'b', 'c'" ) data-testid="call2"></call->
+    `;
+
+    document.body.appendChild(container);
+    ElementGraph.build().execute();
+
+    const call1 = getByTestId(container, 'call1');
+    const call2 = getByTestId(container, 'call2');
+    expect(container).toContainElement(call1);
+    expect(container).toContainElement(call2);
+
+    expect(getByText(call1, '1 + 2 + 3')).toBeInTheDocument();
+    expect(getByText(call1, '6')).toBeInTheDocument();
+
+    expect(getByText(call2, 'a + b + c')).toBeInTheDocument();
+    expect(getByText(call2, 'abc')).toBeInTheDocument();
   });
 
   it('should not require parentheses', () => {
