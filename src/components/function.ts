@@ -42,12 +42,7 @@ export class FunctionDash extends HtmlangElement {
       return;
     }
 
-    let innerHtml = this.initialInnerHTML ?? '';
-    Variable.forEach(innerHtml, (varName) => {
-      const result = this.scope.getVariable(varName);
-      innerHtml = innerHtml!.replaceAll(`{${varName}}`, result.value?.value);
-    });
-
+    const innerHtml = Variable.expandAll(this.initialInnerHTML, this.parentScope);
     caller.innerHTML = innerHtml;
   };
 

@@ -49,17 +49,11 @@ export class ElseIfDash extends BaseHtmlangElement {
   };
 
   private _evaluate(value: string | null): boolean {
-    let condition = value;
-    if (!condition) {
+    if (!value) {
       throw new Error('No condition found');
     }
 
-    Variable.forEach(condition, (varName) => {
-      const result = this.parentScope.getVariable(varName);
-      const value = result.found ? result.value.value : undefined;
-      condition = condition!.replaceAll(`{${varName}}`, value);
-    });
-
+    const condition = Variable.expandAll(value, this.parentScope);
     const evaluated = !!eval(condition);
     if (value === condition) {
       console.debug(`"${condition}" -> ${evaluated}`);

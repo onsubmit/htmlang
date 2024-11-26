@@ -7,13 +7,7 @@ export class ReturnDash extends HtmlangElement {
 
   execute = (): void => {
     const functionElement = this._getFunctionElement();
-
-    let innerHtml = this.initialInnerHTML ?? '';
-    Variable.forEach(innerHtml, (varName) => {
-      const result = this.scope.getVariable(varName);
-      innerHtml = innerHtml!.replaceAll(`{${varName}}`, result.value?.value);
-    });
-
+    const innerHtml = Variable.expandAll(this.initialInnerHTML, this.parentScope);
     const value = eval(innerHtml);
     functionElement.return(value);
   };

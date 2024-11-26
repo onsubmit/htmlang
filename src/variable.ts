@@ -21,7 +21,20 @@ export class Variable {
     return varName;
   };
 
-  static forEach = (string: string, fn: (varName: string) => void): void => {
+  static expandAll = (string: string | null, scope: Scope): string => {
+    let expanded = string ?? '';
+
+    const matches = expanded.matchAll(/{(?<VAR_NAME>\S+)}/g);
+    for (const match of matches) {
+      const varName = match.groups!['VAR_NAME'];
+      const result = scope.getVariable(varName);
+      expanded = expanded.replaceAll(`{${varName}}`, result.value?.value);
+    }
+
+    return expanded;
+  };
+
+  private static _forEach = (string: string, fn: (varName: string) => void): void => {
     const matches = string.matchAll(/{(?<VAR_NAME>\S+)}/g);
     for (const match of matches) {
       const varName = match.groups!['VAR_NAME'];
@@ -64,7 +77,7 @@ export class Variable {
   private _expandVariables(value: string): string {
     let evaluable = value;
 
-    Variable.forEach(value, (varName) => {
+    Variable._forEach(value, (varName) => {
       const result = this._scope.getVariable(varName);
       if (result.found) {
         evaluable = evaluable.replaceAll(`{${varName}}`, result.value._raw);

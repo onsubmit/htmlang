@@ -22,15 +22,4 @@ describe('variable', () => {
     expect(Variable.getName('{age}')).toBe('age');
     expect(Variable.getName('invalid')).toBeUndefined();
   });
-
-  it('can perform an action on each variable from an expression', () => {
-    const cb = vi.fn();
-
-    Variable.forEach('I am {name}. I am {age} years old and like {sport}', cb);
-
-    expect(cb).toHaveBeenCalledTimes(3);
-    expect(cb).toHaveBeenNthCalledWith(1, 'name');
-    expect(cb).toHaveBeenNthCalledWith(2, 'age');
-    expect(cb).toHaveBeenNthCalledWith(3, 'sport');
-  });
 });

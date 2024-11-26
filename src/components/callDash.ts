@@ -17,13 +17,7 @@ export class CallDash extends HtmlangElement {
       throw new Error(`Function named ${name} not found in this scope.`);
     }
 
-    let argsRaw = funcAttr.value;
-    Variable.forEach(argsRaw, (varName) => {
-      const result = this.parentScope.getVariable(varName);
-      const value = result.found ? result.value.value : undefined;
-      argsRaw = argsRaw.replaceAll(`{${varName}}`, value);
-    });
-
+    const argsRaw = Variable.expandAll(funcAttr.value, this.parentScope);
     const args = argsRaw.split(',').map((x) => x.trim());
     func.execute(this, ...args);
   }

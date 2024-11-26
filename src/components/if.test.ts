@@ -24,6 +24,20 @@ describe('if', () => {
     expect(spy).toHaveBeenCalledWith('math is math');
   });
 
+  it('should conditionally render a non-HtmlangElement', () => {
+    const container = document.createElement('div');
+    container.innerHTML = `
+      <const- i="1"></const->
+      <if- (="{i} + 1 === 2" )>
+        <p>Yep, {i} + 1 === 2!</p>
+      </if->
+    `;
+    document.body.appendChild(container);
+    ElementGraph.build().execute();
+
+    expect(getByText(container, 'Yep, 1 + 1 === 2!')).toBeInTheDocument();
+  });
+
   it('should expand variables', () => {
     const spy = vi.spyOn(console, 'log');
 
