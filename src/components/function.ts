@@ -42,7 +42,7 @@ export class FunctionDash extends HtmlangElement {
       return;
     }
 
-    const innerHtml = Variable.expandAll(this.initialInnerHTML, this.parentScope);
+    const innerHtml = Variable.expandAll(this.initialInnerHTML, this.scope);
     caller.innerHTML = innerHtml;
   };
 
