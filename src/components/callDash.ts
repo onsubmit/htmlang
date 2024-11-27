@@ -4,7 +4,7 @@ import { HtmlangElement } from './htmlangElement';
 export class CallDash extends HtmlangElement {
   static getTagName = () => 'call' as const;
 
-  execute(): void {
+  execute = (): void => {
     if (this.attributes.length === 0) {
       throw new Error('Missing function name');
     }
@@ -20,5 +20,5 @@ export class CallDash extends HtmlangElement {
     const argsRaw = Variable.expandAll(funcAttr.value, this.parentScope);
     const args = argsRaw.split(',').map((x) => x.trim());
     func.execute(this, ...args);
-  }
+  };
 }

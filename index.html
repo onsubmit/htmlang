@@ -134,5 +134,17 @@ a + b + c
     <call- is-prime(="1" )></call->
     <call- is-prime(="2" )></call->
     <call- is-prime(="3" )></call->
+
+    <try->
+      <console- log(="Throw?" )></console->
+      <throw- (="'up 🤮'" )></throw->
+      <console- log(="Good choice" )></console->
+    </try->
+    <catch- (="e" )>
+      <console- log(="I threw {e}." )></console->
+    </catch->
+    <finally->
+      <console- log(="Finally!" )></console->
+    </finally->
   </body>
 </html>

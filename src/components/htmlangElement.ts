@@ -43,7 +43,7 @@ export abstract class HtmlangElement extends HTMLElement {
     return this._parentScope;
   }
 
-  abstract execute(): void;
+  execute: (() => void) | undefined;
 
   private _getParentScope = (): Scope => {
     let parent = this.parentElement;
@@ -80,11 +80,8 @@ export abstract class HtmlangElement extends HTMLElement {
 }
 
 export class BaseHtmlangElement extends HtmlangElement {
+  /* istanbul ignore next */
   static getTagName(): string {
     throw new Error('Tag name not set');
-  }
-
-  execute(): void {
-    throw new Error('Method not implemented.');
   }
 }

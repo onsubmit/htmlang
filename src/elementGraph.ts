@@ -1,13 +1,23 @@
 import { CaseDash } from './components/case';
+import { CatchDash } from './components/catch';
 import { DefaultDash } from './components/default';
 import { ElseDash } from './components/else';
 import { ElseIfDash } from './components/elseIf';
+import { FinallyDash } from './components/finally';
 import { ForDash } from './components/for';
 import { FunctionDash } from './components/function';
 import { HtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
+import { ThrowDash } from './components/throw';
 
-const skipDuringBuild = [ElseDash, ElseIfDash, CaseDash, DefaultDash] as const;
+const skipDuringBuild = [
+  ElseDash,
+  ElseIfDash,
+  CaseDash,
+  DefaultDash,
+  CatchDash,
+  FinallyDash,
+] as const;
 export function skipElementDuringBuild(element: Element): boolean {
   return skipDuringBuild.some((type) => element instanceof type);
 }
@@ -40,9 +50,15 @@ export class ElementGraph {
   };
 
   execute = (): void => {
+    let threw = false;
     for (const [element, childGraph] of this.elements.entries()) {
+      if (threw) {
+        return;
+      }
+
       if (element instanceof HtmlangElement) {
-        element.execute();
+        element.execute?.();
+        threw = element instanceof ThrowDash;
 
         if (skipElementDuringExecution(element)) {
           continue;
