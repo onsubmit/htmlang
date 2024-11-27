@@ -5,6 +5,7 @@ import { CallDash } from './components/callDash';
 import { CaseDash } from './components/case';
 import { ConsoleDash } from './components/console';
 import { ConstDash } from './components/const';
+import { DebuggerDash } from './components/debugger';
 import { DefaultDash } from './components/default';
 import { ElseDash } from './components/else';
 import { ElseIfDash } from './components/elseIf';
@@ -30,6 +31,7 @@ export function defineElements(): void {
     CaseDash,
     ConsoleDash,
     ConstDash,
+    DebuggerDash,
     DefaultDash,
     ElseDash,
     ElseIfDash,
