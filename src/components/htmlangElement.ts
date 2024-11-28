@@ -24,6 +24,7 @@ abstract class HtmlangElement extends HTMLElement {
   }
 
   abstract excludeFromElementGraph: boolean;
+  abstract executesOwnChildren: boolean;
 
   get initialInnerHTML(): string | null {
     return this._initialInnerHTML;
@@ -83,6 +84,7 @@ abstract class HtmlangElement extends HTMLElement {
 
 export class BaseHtmlangElement extends HtmlangElement {
   excludeFromElementGraph = false;
+  executesOwnChildren = false;
 
   /* istanbul ignore next */
   static getTagName(): string {

@@ -5,6 +5,8 @@ export class IfDash extends IfDashBase {
 
   static observedAttributes = ['('];
 
+  executesOwnChildren = true;
+
   attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     if (this.initialInnerHTML === null) {
       return;

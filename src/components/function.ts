@@ -6,8 +6,9 @@ import { BaseHtmlangElement } from './htmlangElement';
 export class FunctionDash extends BaseHtmlangElement {
   static getTagName = () => 'function' as const;
 
-  private _function: FunctionEx | null = null;
+  executesOwnChildren = true;
 
+  private _function: FunctionEx | null = null;
   private _lastReturnValue: any;
 
   connectedCallback(): void {

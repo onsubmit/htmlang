@@ -1,13 +1,5 @@
-import { ForDash } from './components/for';
-import { FunctionDash } from './components/function';
 import { BaseHtmlangElement } from './components/htmlangElement';
-import { IfDash } from './components/if';
 import { ThrowDash } from './components/throw';
-
-const skipDuringExecution = [ForDash, FunctionDash, IfDash] as const;
-export function skipElementDuringExecution(element: Element): boolean {
-  return skipDuringExecution.some((type) => element instanceof type);
-}
 
 export class ElementGraph {
   elements: Map<Element, ElementGraph>;
@@ -37,7 +29,7 @@ export class ElementGraph {
         element.execute?.();
         threw = element instanceof ThrowDash;
 
-        if (skipElementDuringExecution(element)) {
+        if (element.executesOwnChildren) {
           continue;
         }
       }
