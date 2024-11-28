@@ -16,7 +16,14 @@ export abstract class IfDashBase extends BaseHtmlangElement {
 
   execute = (): void => {
     const evaluated = this._evaluate(this.getAttribute('('));
-    this._setCondition(evaluated);
+    if (evaluated) {
+      this.innerHTML = Variable.expandAll(this.initialInnerHTML, this.parentScope);
+      this._nextElse?.clear();
+      traverseChildren(this);
+    } else {
+      this.innerHTML = '';
+      this._nextElse?.execute();
+    }
   };
 
   protected _evaluate(value: string | null): boolean {
@@ -34,15 +41,4 @@ export abstract class IfDashBase extends BaseHtmlangElement {
 
     return evaluated;
   }
-
-  private _setCondition = (value: boolean): void => {
-    if (value) {
-      this.innerHTML = Variable.expandAll(this.initialInnerHTML, this.parentScope);
-      this._nextElse?.clear();
-      traverseChildren(this);
-    } else {
-      this.innerHTML = '';
-      this._nextElse?.execute();
-    }
-  };
 }
