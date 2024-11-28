@@ -1,4 +1,4 @@
-import { traverseChildren } from '../main';
+import { ElementGraph } from '../elementGraph';
 import { Variable } from '../variable';
 import { BaseHtmlangElement } from './htmlangElement';
 
@@ -34,8 +34,9 @@ export class ForDash extends BaseHtmlangElement {
       div.style.display = 'none';
       div.innerHTML = this.initialInnerHTML!.replaceAll(`{${varName}}`, item);
       this.appendChild(div);
-      traverseChildren(div);
+      ElementGraph.traverseChildren(div);
       this.removeChild(div);
+
       this.innerHTML += div.innerHTML;
     }
   }

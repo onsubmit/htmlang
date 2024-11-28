@@ -6,7 +6,7 @@ import { BaseHtmlangElement } from './htmlangElement';
 export class CaseDash extends BaseHtmlangElement {
   static getTagName = () => 'case' as const;
 
-  excludeFromElementGraph = true;
+  excludeFromExecution = true;
 
   get hasBreakStatement(): boolean {
     for (const child of this.children) {
@@ -17,11 +17,6 @@ export class CaseDash extends BaseHtmlangElement {
 
     return false;
   }
-
-  /* istanbul ignore next */
-  execute = (): void => {
-    throw new Error('Method not implemented.');
-  };
 
   matchesCondition = (condition: any, scope: Scope): boolean => {
     const evaluated = this._evaluate(this.getAttribute('('), scope);

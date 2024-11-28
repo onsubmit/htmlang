@@ -1,4 +1,4 @@
-import { traverseChildren } from '../main';
+import { ElementGraph } from '../elementGraph';
 import { Variable } from '../variable';
 import { ElseDash } from './else';
 import { ElseIfDash } from './elseIf';
@@ -19,7 +19,7 @@ export abstract class IfDashBase extends BaseHtmlangElement {
     if (evaluated) {
       this.innerHTML = Variable.expandAll(this.initialInnerHTML, this.parentScope);
       this._nextElse?.clear();
-      traverseChildren(this);
+      ElementGraph.traverseChildren(this);
     } else {
       this.innerHTML = '';
       this._nextElse?.execute();

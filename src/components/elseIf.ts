@@ -4,7 +4,7 @@ import { IfDashBase } from './ifBase';
 export class ElseIfDash extends IfDashBase {
   static getTagName = () => 'else-if' as const;
 
-  excludeFromElementGraph = true;
+  excludeFromExecution = true;
 
   static observedAttributes = ['('];
 

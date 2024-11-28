@@ -1,11 +1,11 @@
-import { traverseChildren } from '../main';
+import { ElementGraph } from '../elementGraph';
 import { Variable } from '../variable';
 import { BaseHtmlangElement } from './htmlangElement';
 
 export class CatchDash extends BaseHtmlangElement {
   static getTagName = () => 'catch' as const;
 
-  excludeFromElementGraph = true;
+  excludeFromExecution = true;
 
   catchError = (error: any): void => {
     const argName = this.getAttribute('(') ?? '';
@@ -13,6 +13,6 @@ export class CatchDash extends BaseHtmlangElement {
       this.scope.addVariable(new Variable('let', argName, error, this.scope));
     }
 
-    traverseChildren(this);
+    ElementGraph.traverseChildren(this);
   };
 }

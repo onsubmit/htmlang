@@ -23,7 +23,7 @@ abstract class HtmlangElement extends HTMLElement {
     scopeRegistry.remove(this._scopeId);
   }
 
-  abstract excludeFromElementGraph: boolean;
+  abstract excludeFromExecution: boolean;
   abstract executesOwnChildren: boolean;
 
   get initialInnerHTML(): string | null {
@@ -83,7 +83,7 @@ abstract class HtmlangElement extends HTMLElement {
 }
 
 export class BaseHtmlangElement extends HtmlangElement {
-  excludeFromElementGraph = false;
+  excludeFromExecution = false;
   executesOwnChildren = false;
 
   /* istanbul ignore next */

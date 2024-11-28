@@ -4,6 +4,8 @@ import { BaseHtmlangElement } from './htmlangElement';
 export class CallDash extends BaseHtmlangElement {
   static getTagName = () => 'call' as const;
 
+  executesOwnChildren = true;
+
   execute = (): void => {
     if (this.attributes.length === 0) {
       throw new Error('Missing function name');

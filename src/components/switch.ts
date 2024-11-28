@@ -1,4 +1,4 @@
-import { traverseChildren } from '../main';
+import { ElementGraph } from '../elementGraph';
 import { Variable } from '../variable';
 import { CaseDash } from './case';
 import { DefaultDash } from './default';
@@ -6,6 +6,8 @@ import { BaseHtmlangElement } from './htmlangElement';
 
 export class SwitchDash extends BaseHtmlangElement {
   static getTagName = () => 'switch' as const;
+
+  executesOwnChildren = true;
 
   private _defaultCase: DefaultDash | undefined;
 
@@ -38,7 +40,7 @@ export class SwitchDash extends BaseHtmlangElement {
     for (const caseStatement of this._cases) {
       const caseMatched = caseStatement.matchesCondition(evaluated, this.parentScope);
       if (caseMatched || earlierCaseWithoutBreakMatched) {
-        traverseChildren(caseStatement);
+        ElementGraph.traverseChildren(caseStatement);
         if (caseStatement.hasBreakStatement) {
           return;
         } else {
@@ -48,7 +50,7 @@ export class SwitchDash extends BaseHtmlangElement {
     }
 
     if (this._defaultCase) {
-      traverseChildren(this._defaultCase);
+      ElementGraph.traverseChildren(this._defaultCase);
     }
   };
 

@@ -1,6 +1,6 @@
 import { CallDash } from './components/callDash';
 import { FunctionDash } from './components/function';
-import { traverseChildren } from './main';
+import { ElementGraph } from './elementGraph';
 import { Variable } from './variable';
 
 export class FunctionEx {
@@ -45,7 +45,7 @@ export class FunctionEx {
       this._functionElement.scope.addVariable(variable);
     }
 
-    traverseChildren(this._functionElement);
+    ElementGraph.traverseChildren(this._functionElement);
     this._functionElement.applyResult(caller);
 
     for (const variable of variables) {

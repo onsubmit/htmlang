@@ -61,27 +61,6 @@ export function defineElements(): void {
   }
 }
 
-export function traverseChildren(element: Element): void {
-  for (const child of element.children) {
-    if (child instanceof BaseHtmlangElement && !child.excludeFromElementGraph) {
-      child.execute?.();
-    }
-
-    if (
-      child instanceof IfDash ||
-      child instanceof ElseIfDash ||
-      child instanceof ElseDash ||
-      child instanceof CallDash ||
-      child instanceof SwitchDash ||
-      child instanceof TryDash
-    ) {
-      continue;
-    }
-
-    traverseChildren(child);
-  }
-}
-
 defineElements();
 const graph = ElementGraph.build();
 graph.execute();

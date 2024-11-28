@@ -1,14 +1,14 @@
-import { traverseChildren } from '../main';
+import { ElementGraph } from '../elementGraph';
 import { BaseHtmlangElement } from './htmlangElement';
 
 export class ElseDash extends BaseHtmlangElement {
   static getTagName = () => 'else' as const;
 
-  excludeFromElementGraph = true;
+  excludeFromExecution = true;
 
   execute = (): void => {
     this.innerHTML = this.initialInnerHTML ?? '';
-    traverseChildren(this);
+    ElementGraph.traverseChildren(this);
   };
 
   clear = (): void => {
