@@ -4,7 +4,7 @@ import { globalScope } from '../main';
 import { Scope } from '../scope';
 import { scopeRegistry } from '../scopeRegistry';
 
-export abstract class HtmlangElement extends HTMLElement {
+abstract class HtmlangElement extends HTMLElement {
   private _scopeId = uuidv4();
   private _parentScope: Scope | null = null;
   private _initialInnerHTML: string | null = null;

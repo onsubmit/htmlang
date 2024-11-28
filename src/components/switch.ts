@@ -2,9 +2,9 @@ import { traverseChildren } from '../main';
 import { Variable } from '../variable';
 import { CaseDash } from './case';
 import { DefaultDash } from './default';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class SwitchDash extends HtmlangElement {
+export class SwitchDash extends BaseHtmlangElement {
   static getTagName = () => 'switch' as const;
 
   private _defaultCase: DefaultDash | undefined;

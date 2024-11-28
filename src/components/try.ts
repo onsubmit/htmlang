@@ -1,8 +1,8 @@
 import { CatchDash } from './catch';
 import { FinallyDash } from './finally';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class TryDash extends HtmlangElement {
+export class TryDash extends BaseHtmlangElement {
   static getTagName = () => 'try' as const;
 
   private get _siblings(): {

@@ -2,9 +2,9 @@ import { traverseChildren } from '../main';
 import { Variable } from '../variable';
 import { ElseDash } from './else';
 import { ElseIfDash } from './elseIf';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export abstract class IfDashBase extends HtmlangElement {
+export abstract class IfDashBase extends BaseHtmlangElement {
   protected get _nextElse(): ElseDash | ElseIfDash | undefined {
     if (
       this.nextElementSibling instanceof ElseIfDash ||

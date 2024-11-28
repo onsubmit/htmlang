@@ -1,8 +1,8 @@
 import { traverseChildren } from '../main';
 import { Variable } from '../variable';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class CatchDash extends HtmlangElement {
+export class CatchDash extends BaseHtmlangElement {
   static getTagName = () => 'catch' as const;
 
   catchError = (error: any): void => {

@@ -1,8 +1,8 @@
 import { Variable } from '../variable';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 import { TryDash } from './try';
 
-export class ThrowDash extends HtmlangElement {
+export class ThrowDash extends BaseHtmlangElement {
   static getTagName = () => 'throw' as const;
 
   private get _tryElement(): TryDash | undefined {

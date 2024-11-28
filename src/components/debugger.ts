@@ -1,6 +1,6 @@
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class DebuggerDash extends HtmlangElement {
+export class DebuggerDash extends BaseHtmlangElement {
   static getTagName = () => 'debugger' as const;
 
   /* istanbul ignore next */

@@ -1,9 +1,9 @@
 import { FunctionEx } from '../functionEx';
 import { Variable } from '../variable';
 import { CallDash } from './callDash';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class FunctionDash extends HtmlangElement {
+export class FunctionDash extends BaseHtmlangElement {
   static getTagName = () => 'function' as const;
 
   private _function: FunctionEx | null = null;

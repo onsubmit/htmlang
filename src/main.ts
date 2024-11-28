@@ -13,7 +13,7 @@ import { ElseIfDash } from './components/elseIf';
 import { FinallyDash } from './components/finally';
 import { ForDash } from './components/for';
 import { FunctionDash } from './components/function';
-import { BaseHtmlangElement, HtmlangElement } from './components/htmlangElement';
+import { BaseHtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
 import { LetDash } from './components/let';
 import { ReturnDash } from './components/return';
@@ -63,7 +63,7 @@ export function defineElements(): void {
 
 export function traverseChildren(element: Element): void {
   for (const child of element.children) {
-    if (child instanceof HtmlangElement && !skipElementDuringBuild(child)) {
+    if (child instanceof BaseHtmlangElement && !skipElementDuringBuild(child)) {
       child.execute?.();
     }
 

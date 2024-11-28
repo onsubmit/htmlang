@@ -1,8 +1,8 @@
 import { Variable } from '../variable';
 import { FunctionDash } from './function';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class ReturnDash extends HtmlangElement {
+export class ReturnDash extends BaseHtmlangElement {
   static getTagName = () => 'return' as const;
 
   execute = (): void => {

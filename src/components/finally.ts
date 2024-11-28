@@ -1,7 +1,7 @@
 import { traverseChildren } from '../main';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class FinallyDash extends HtmlangElement {
+export class FinallyDash extends BaseHtmlangElement {
   static getTagName = () => 'finally' as const;
 
   continue = (): void => {

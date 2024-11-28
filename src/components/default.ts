@@ -1,6 +1,6 @@
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class DefaultDash extends HtmlangElement {
+export class DefaultDash extends BaseHtmlangElement {
   static getTagName = () => 'default' as const;
 
   /* istanbul ignore next */

@@ -6,7 +6,7 @@ import { ElseIfDash } from './components/elseIf';
 import { FinallyDash } from './components/finally';
 import { ForDash } from './components/for';
 import { FunctionDash } from './components/function';
-import { HtmlangElement } from './components/htmlangElement';
+import { BaseHtmlangElement } from './components/htmlangElement';
 import { IfDash } from './components/if';
 import { ThrowDash } from './components/throw';
 
@@ -56,7 +56,7 @@ export class ElementGraph {
         return;
       }
 
-      if (element instanceof HtmlangElement) {
+      if (element instanceof BaseHtmlangElement) {
         element.execute?.();
         threw = element instanceof ThrowDash;
 

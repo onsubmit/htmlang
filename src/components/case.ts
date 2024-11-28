@@ -1,9 +1,9 @@
 import { Scope } from '../scope';
 import { Variable } from '../variable';
 import { BreakDash } from './break';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class CaseDash extends HtmlangElement {
+export class CaseDash extends BaseHtmlangElement {
   static getTagName = () => 'case' as const;
 
   get hasBreakStatement(): boolean {

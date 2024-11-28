@@ -1,7 +1,7 @@
 import { Variable } from '../variable';
-import { HtmlangElement } from './htmlangElement';
+import { BaseHtmlangElement } from './htmlangElement';
 
-export class CallDash extends HtmlangElement {
+export class CallDash extends BaseHtmlangElement {
   static getTagName = () => 'call' as const;
 
   execute = (): void => {
