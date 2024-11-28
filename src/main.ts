@@ -22,7 +22,7 @@ import { StatementDash } from './components/statement';
 import { SwitchDash } from './components/switch';
 import { ThrowDash } from './components/throw';
 import { TryDash } from './components/try';
-import { ElementGraph, skipElementDuringBuild } from './elementGraph';
+import { ElementGraph } from './elementGraph';
 import { scopeRegistry } from './scopeRegistry';
 
 const globalScope = scopeRegistry.createAndAdd('global', null);
@@ -63,7 +63,7 @@ export function defineElements(): void {
 
 export function traverseChildren(element: Element): void {
   for (const child of element.children) {
-    if (child instanceof BaseHtmlangElement && !skipElementDuringBuild(child)) {
+    if (child instanceof BaseHtmlangElement && !child.excludeFromElementGraph) {
       child.execute?.();
     }
 

@@ -23,6 +23,8 @@ abstract class HtmlangElement extends HTMLElement {
     scopeRegistry.remove(this._scopeId);
   }
 
+  abstract excludeFromElementGraph: boolean;
+
   get initialInnerHTML(): string | null {
     return this._initialInnerHTML;
   }
@@ -80,6 +82,8 @@ abstract class HtmlangElement extends HTMLElement {
 }
 
 export class BaseHtmlangElement extends HtmlangElement {
+  excludeFromElementGraph = false;
+
   /* istanbul ignore next */
   static getTagName(): string {
     throw new Error('Tag name not set');

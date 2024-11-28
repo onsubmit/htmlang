@@ -5,6 +5,8 @@ import { BaseHtmlangElement } from './htmlangElement';
 export class CatchDash extends BaseHtmlangElement {
   static getTagName = () => 'catch' as const;
 
+  excludeFromElementGraph = true;
+
   catchError = (error: any): void => {
     const argName = this.getAttribute('(') ?? '';
     if (argName) {

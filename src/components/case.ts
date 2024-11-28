@@ -6,6 +6,8 @@ import { BaseHtmlangElement } from './htmlangElement';
 export class CaseDash extends BaseHtmlangElement {
   static getTagName = () => 'case' as const;
 
+  excludeFromElementGraph = true;
+
   get hasBreakStatement(): boolean {
     for (const child of this.children) {
       if (child instanceof BreakDash) {
